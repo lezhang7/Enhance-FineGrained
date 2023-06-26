@@ -14,15 +14,14 @@ import numpy as np
 import argparse
 import time
 from pycocotools.coco import COCO
-import glob
 
-COCO_DATASET_ROOT="/home/mila/l/le.zhang/scratch/dataset/coco/2014"
-train_annotations_root='/home/mila/l/le.zhang/scratch/datasets/coco/2014/annotations/captions_train2014.json'
+COCO_DATASET_ROOT="./"
+train_annotations_root='annotations/captions_train2014.json'
 xvlm_coco_train_annotations_root='/home/mila/l/le.zhang/scratch/X-VLM/data/finetune/coco_train.json'
-val_annotations_root='/home/mila/l/le.zhang/scratch/datasets/coco/2014/annotations/captions_val2014.json'
-train_root="/home/mila/l/le.zhang/scratch/datasets/coco/2014/train2014/"
+val_annotations_root='annotations/captions_val2014.json'
+train_root="train2014/"
 # test_root="./test2014/"
-val_root="/home/mila/l/le.zhang/scratch/datasets/coco/2014/val2014/"
+val_root="val2014/"
 
 
 def read_foils(foils_path):
@@ -62,54 +61,9 @@ def read_foil_dataset(foils_path):
     return foils_data
 
 
-class ValseDataset(Dataset):
-    def __init__(self,DATA,filter_num:int = 2,single_pair:bool = False):
-        self.data=[]
-        self.DATA=DATA
-        self.single_pair=single_pair
-        for instrument, foil_info in DATA.items():
-            images_path = foil_info[0]
-            foils_path = foil_info[1]
-            foils_data = read_foils(foils_path)
-            
-            data=[self.add_info(foils_data[k],k,images_path) for k in foils_data]
-            data=filter(lambda x:x['mturk']['caption']>=filter_num,data)
-            self.data.extend(data)
-        if not single_pair:
-            self.data=self.generate_label(self.data)
-    def generate_label(self,data):
-        print('generating order label')
-        order_discrimination_data=[]
-        for i in data:
-            j=i.copy()
-            i['label']=0
-            order_discrimination_data.append(i)
-            true_caption=j['caption']
-            j['caption']=j['foil']
-            j['foil']=true_caption
-            j['label']=1
-            order_discrimination_data.append(j)      
-        return order_discrimination_data
-            
-    def add_info(self,dict,idx,images_path):
-        dict['idx']=idx
-        image_path=os.path.join(images_path,dict['image_file'])
-        dict['image_path']=image_path
-        return dict  
-    def __len__(self):
-        return len(self.data)
-    def __getitem__(self, index):
-        example=self.data[index]
-        # print(example)
-        text= [example['caption'],example['foil']]
-        image=Image.open(example['image_path']).convert('RGB') 
-        true_caption=0 if self.single_pair else example['label']
-        return {'text':text,'image':image,'true_caption_order':true_caption,'dataset':example['dataset']}
-
-
 class CocoDataset(Dataset):
     """COCO Custom Dataset compatible with torch.utils.data.DataLoader."""
-    def __init__(self, root, json, transforms,tokenizer=None):
+    def __init__(self, image_root, json, transforms,tokenizer=None):
         """Set the path for images, captions and vocabulary wrapper.
         
         Args:
@@ -118,7 +72,7 @@ class CocoDataset(Dataset):
             vocab: vocabulary wrapper.
             transform: image transformer.
         """
-        self.root = root
+        self.root = image_root
         self.dataset = COCO(json)
         self.ids = list(self.dataset.anns.keys())
         self.transforms = transforms
@@ -142,58 +96,6 @@ class CocoDataset(Dataset):
         return len(self.ids)
     
 
-class ConceptualCaptionDataset(Dataset):
-    def __init__(self,root:str ="/network/datasets/conceptualcaptions/",split:str= "train",small_data:int=0,samples_root:str=None):
-        self.root=root
-        self.small_data=small_data
-        if samples_root:
-            if os.path.isdir(samples_root):
-                data_file_splits=glob.glob(os.path.join(samples_root,'*.npy'))
-                print(f'merging {len(data_file_splits)} splied files from {samples_root}')
-                self.samples=[]
-                for file_split in data_file_splits:
-                    self.samples.extend(self.loadList(file_split))
-            else:
-                self.samples=self.loadList(samples_root)
-        else:
-            self.samples=self.load_data(root,split)
-    def load_data(self,data_dir,split):
-        # Loading dataset from local disk
-        if not isinstance(data_dir, Path):
-            data_dir = Path(data_dir)
-        assert split in ['train', 'val']
-        if split == 'train':
-            data_dir = data_dir / 'Train'
-        elif split == 'val':
-            data_dir = data_dir / 'Validation'
-
-        captions = []
-        with open(next(data_dir.glob('*.tsv'))) as f:
-            reader = csv.reader(f, delimiter='\t')
-            for row in reader:
-                captions.append(row[0])
-        samples = []
-        for image_file in data_dir.glob('*/*'):
-            id = int(image_file.name.split('-')[0])
-            caption = captions[id]
-            samples.append({'idx':id, 'image_path':str(image_file),"caption":caption})
-            if self.small_data and len(samples)==self.small_data:
-                break
-        return samples
-    def read_img(self,file_path):
-        return Image.open(file_path).convert("RGB")
-    def loadList(self,file_path):
-        # the filename should mention the extension '.npy'
-        tempNumpyArray=np.load(file_path,allow_pickle=True)
-        return tempNumpyArray.tolist()
-    def __len__(self):
-        return len(self.samples)
-    def __getitem__(self,index):
-        out=self.samples[index]
-        if 'image' not in out:
-            out.update({'image':self.read_img(out['image_path'])})
-        return out
-
 class MaskedCaptionsDataset(Dataset):
     def __init__(self,masked_captions):
         self.masked_captions=masked_captions
@@ -201,6 +103,7 @@ class MaskedCaptionsDataset(Dataset):
         return self.masked_captions[index]
     def __len__(self):
         return len(self.masked_captions)
+    
 class TextAugment(object):
     def __init__(self):
         self.device=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
@@ -251,10 +154,10 @@ class TextAugment(object):
         s_time=time.time()
         docs=list(self.nlp.pipe([data_item['caption'] for data_item in dataset],n_process=8))
         m_time=time.time()
-        print(f"POS compledted, cost {m_time-s_time} s")
+        print(f"POS compledted, cost {m_time-s_time:.2f} s")
         dataset=list(map(self.mask_captions,zip(docs,dataset)))
         e_time=time.time()
-        print(f'POS and MASK completed! cost {e_time-s_time} s')
+        print(f'POS and MASK completed! cost {e_time-s_time:.2f} s')
         masked_captions=[]
         for data_item in dataset:
             for key,value in data_item.items():
@@ -294,16 +197,16 @@ def augmentation(args):
     if args.data=='coco_train':
         dataset=CocoDataset(os.path.join(COCO_DATASET_ROOT,train_root),train_annotations_root,None)
         samples=list(dataset.dataset.anns.values())
-    elif args.data=='coco_val':
-        dataset=CocoDataset(os.path.join(COCO_DATASET_ROOT,val_root),val_annotations_root,None)
-        samples=list(dataset.dataset.anns.values())
+    # elif args.data=='coco_val':
+    #     dataset=CocoDataset(os.path.join(COCO_DATASET_ROOT,val_root),val_annotations_root,None)
+    #     samples=list(dataset.dataset.anns.values())
     elif args.data=='coco_xvlm':
         samples=json.load(open(xvlm_coco_train_annotations_root, 'r'))
     DA=TextAugment()
-    os.makedirs(f"processed_dataset/{args.data}",exist_ok=True)
+    os.makedirs(f"generated_data/{args.data}",exist_ok=True)
     for split_idx,split_star_index in enumerate(range(0,len(samples),args.split_num)):
         data=samples[split_star_index:split_star_index+args.split_num]
-        save_path=os.path.join(f'processed_dataset/{args.data}/processed_dataset{split_idx}.npy')
+        save_path=os.path.join(f'generated_data/{args.data}/processed_dataset{split_idx}.npy')
         DA(data,save_path)
 def get_arg_parser():
     parser = argparse.ArgumentParser()

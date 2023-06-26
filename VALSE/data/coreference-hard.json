@@ -1,0 +1,2258 @@
+{
+    "coref_test_0": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000284024.jpg",
+        "only_caption": "a woman sits on a bench holding a guitar in her lap",
+        "caption": "a woman sits on a bench holding a guitar in her lap. is this in a park? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a woman sits on a bench holding a guitar in her lap. is this in a park? no."
+    },
+    "coref_test_1": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000440253.jpg",
+        "only_caption": "5 people skiing in a snowy area surrounded by trees",
+        "caption": "5 people skiing in a snowy area surrounded by trees. is this a resort do you think? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "5 people skiing in a snowy area surrounded by trees. is this a resort do you think? yes."
+    },
+    "coref_test_2": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000097915.jpg",
+        "only_caption": "a woman sitting at a table with a glass of wine while she is looking at her cellphone",
+        "caption": "a woman sitting at a table with a glass of wine while she is looking at her cellphone. is it a smartphone? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a woman sitting at a table with a glass of wine while she is looking at her cellphone. is it a smartphone? no."
+    },
+    "coref_test_3": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000098602.jpg",
+        "only_caption": "vegetables sit in bowls on a counter next to an orange",
+        "caption": "vegetables sit in bowls on a counter next to an orange. is it there with spoons? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "vegetables sit in bowls on a counter next to an orange. is it there with spoons? yes."
+    },
+    "coref_test_4": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000222337.jpg",
+        "only_caption": "a white toilet attached to a wooden wall sits in a tiled bathroom",
+        "caption": "a white toilet attached to a wooden wall sits in a tiled bathroom. is this a bathroom in a house? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 0,
+            "other": 2
+        },
+        "foil": "a white toilet attached to a wooden wall sits in a tiled bathroom. is this a bathroom in a house? yes."
+    },
+    "coref_test_5": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000454168.jpg",
+        "only_caption": "the surfer carries the surfboard on their head past the orange beach chairs",
+        "caption": "the surfer carries the surfboard on their head past the orange beach chairs. is this photo in color? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "the surfer carries the surfboard on their head past the orange beach chairs. is this photo in color? no."
+    },
+    "coref_test_6": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000174225.jpg",
+        "only_caption": "an empty but clean public restroom with a toilet and automatic hand dryer",
+        "caption": "an empty but clean public restroom with a toilet and automatic hand dryer. is this a single person bathroom? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "an empty but clean public restroom with a toilet and automatic hand dryer. is this a single person bathroom? no."
+    },
+    "coref_test_7": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000455297.jpg",
+        "only_caption": "an old burgundy, black, and red steam locomotive on tracks near a wall and platform",
+        "caption": "an old burgundy, black, and red steam locomotive on tracks near a wall and platform. is this a toy train set? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "an old burgundy, black, and red steam locomotive on tracks near a wall and platform. is this a toy train set? yes."
+    },
+    "coref_test_8": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000141126.jpg",
+        "only_caption": "a man hitting a tennis ball with a racket",
+        "caption": "a man hitting a tennis ball with a racket. is he outside? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man hitting a tennis ball with a racket. is he outside? no."
+    },
+    "coref_test_9": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000295004.jpg",
+        "only_caption": "2 men standing at different places on a flight of stairs outside",
+        "caption": "2 men standing at different places on a flight of stairs outside. is it in color? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "2 men standing at different places on a flight of stairs outside. is it in color? yes."
+    },
+    "coref_test_11": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000495362.jpg",
+        "only_caption": "a dog and a cat that are playing together",
+        "caption": "a dog and a cat that are playing together. is this in a house? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a dog and a cat that are playing together. is this in a house? yes."
+    },
+    "coref_test_12": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000095221.jpg",
+        "only_caption": "an older woman is sitting on the ground next to bundles of bananas at a market",
+        "caption": "an older woman is sitting on the ground next to bundles of bananas at a market. does it look like the usa? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "an older woman is sitting on the ground next to bundles of bananas at a market. does it look like the usa? yes."
+    },
+    "coref_test_13": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000417136.jpg",
+        "only_caption": "a train carrying a line of water tanks on a train track at an empty terminal surrounded by brick buildings",
+        "caption": "a train carrying a line of water tanks on a train track at an empty terminal surrounded by brick buildings. is they train long? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 3,
+            "caption": 0,
+            "other": 0
+        },
+        "foil": "a train carrying a line of water tanks on a train track at an empty terminal surrounded by brick buildings. is they train long? yes."
+    },
+    "coref_test_15": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000163834.jpg",
+        "only_caption": "a bald man wearing a white shirt and swinging a tennis racquet",
+        "caption": "a bald man wearing a white shirt and swinging a tennis racquet. is he on a tennis court? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 1,
+            "other": 2
+        },
+        "foil": "a bald man wearing a white shirt and swinging a tennis racquet. is he on a tennis court? no."
+    },
+    "coref_test_16": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000508600.jpg",
+        "only_caption": "the buildings are tall and in the middle of the city",
+        "caption": "the buildings are tall and in the middle of the city. is it sunny? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "the buildings are tall and in the middle of the city. is it sunny? no."
+    },
+    "coref_test_17": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000059153.jpg",
+        "only_caption": "a small, red train cart stands alone on train tracks",
+        "caption": "a small, red train cart stands alone on train tracks. are there any people in this picture? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a small, red train cart stands alone on train tracks. are there any people in this picture? yes."
+    },
+    "coref_test_19": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000552399.jpg",
+        "only_caption": "a black train parked in the grass with another train behind it",
+        "caption": "a black train parked in the grass with another train behind it. is it carrying coal? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a black train parked in the grass with another train behind it. is it carrying coal? yes."
+    },
+    "coref_test_21": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000355853.jpg",
+        "only_caption": "the elephant is standing on grass by the water",
+        "caption": "the elephant is standing on grass by the water. is it a baby elephant? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 3,
+            "caption": 0,
+            "other": 0
+        },
+        "foil": "the elephant is standing on grass by the water. is it a baby elephant? yes."
+    },
+    "coref_test_22": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000083289.jpg",
+        "only_caption": "a white polar bear swimming under the water",
+        "caption": "a white polar bear swimming under the water. is this an adult bear? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a white polar bear swimming under the water. is this an adult bear? no."
+    },
+    "coref_test_23": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000179535.jpg",
+        "only_caption": "an assortment of different foods on a table",
+        "caption": "an assortment of different foods on a table. is this in a home? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "an assortment of different foods on a table. is this in a home? yes."
+    },
+    "coref_test_24": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000196905.jpg",
+        "only_caption": "2 people are riding on horses along a beach",
+        "caption": "2 people are riding on horses along a beach. are there any other people other than those on the 2 horses? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "2 people are riding on horses along a beach. are there any other people other than those on the 2 horses? no."
+    },
+    "coref_test_25": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000018807.jpg",
+        "only_caption": "a breakfast meal of eggs, potatoes, sausage, and bacon are prepared on a white plate with a red tomato for garnish",
+        "caption": "a breakfast meal of eggs, potatoes, sausage, and bacon are prepared on a white plate with a red tomato for garnish. does this breakfast look like it could be a freezer meal? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 1,
+            "other": 1
+        },
+        "foil": "a breakfast meal of eggs, potatoes, sausage, and bacon are prepared on a white plate with a red tomato for garnish. does this breakfast look like it could be a freezer meal? yes."
+    },
+    "coref_test_26": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000505558.jpg",
+        "only_caption": "a dad takes of picture of him and his 2 sons brushing their teeth",
+        "caption": "a dad takes of picture of him and his 2 sons brushing their teeth. is this in a bathroom? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a dad takes of picture of him and his 2 sons brushing their teeth. is this in a bathroom? no."
+    },
+    "coref_test_27": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000457675.jpg",
+        "only_caption": "4 women on a beach 1 facing 3 others who are holding surfboards",
+        "caption": "4 women on a beach 1 facing 3 others who are holding surfboards. do they wear sunglasses? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "4 women on a beach 1 facing 3 others who are holding surfboards. do they wear sunglasses? yes."
+    },
+    "coref_test_28": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000518581.jpg",
+        "only_caption": "a small black and white dog lies in a dog bed",
+        "caption": "a small black and white dog lies in a dog bed. what type of dog is it? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 0,
+            "other": 1
+        },
+        "foil": "a small black and white dog lies in a dog bed. what type of dog is it? yes."
+    },
+    "coref_test_29": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000520026.jpg",
+        "only_caption": "a single giraffe eating off a branch in a wooden pen",
+        "caption": "a single giraffe eating off a branch in a wooden pen. is it a full grown giraffe? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a single giraffe eating off a branch in a wooden pen. is it a full grown giraffe? no."
+    },
+    "coref_test_30": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000096607.jpg",
+        "only_caption": "a person holding a sandwich with sausage and egg",
+        "caption": "a person holding a sandwich with sausage and egg. is it colored? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a person holding a sandwich with sausage and egg. is it colored? no."
+    },
+    "coref_test_31": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000080366.jpg",
+        "only_caption": "unoccupied bathroom without towels or toilet paper",
+        "caption": "unoccupied bathroom without towels or toilet paper. is this a men's or women's? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 0,
+            "other": 3
+        },
+        "foil": "unoccupied bathroom without towels or toilet paper. is this a men's or women's? yes."
+    },
+    "coref_test_32": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000542075.jpg",
+        "only_caption": "a panoramic view of the kitchen and living room",
+        "caption": "a panoramic view of the kitchen and living room. is this photo is color? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a panoramic view of the kitchen and living room. is this photo is color? no."
+    },
+    "coref_test_33": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000465136.jpg",
+        "only_caption": "a boy and couple riding atop on elephant",
+        "caption": "a boy and couple riding atop on elephant. is this a family photo? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 0,
+            "other": 1
+        },
+        "foil": "a boy and couple riding atop on elephant. is this a family photo? yes."
+    },
+    "coref_test_35": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000006446.jpg",
+        "only_caption": "a man and woman pose together on skis on a snowy, mountainous terrain",
+        "caption": "a man and woman pose together on skis on a snowy, mountainous terrain. is it snowing? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man and woman pose together on skis on a snowy, mountainous terrain. is it snowing? yes."
+    },
+    "coref_test_36": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000273836.jpg",
+        "only_caption": "there is an open pizza box with a beer in it and a slice missing out of it the pizza is white pizza with tomatoes on it",
+        "caption": "there is an open pizza box with a beer in it and a slice missing out of it the pizza is white pizza with tomatoes on it. is it american cheese pizza? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "there is an open pizza box with a beer in it and a slice missing out of it the pizza is white pizza with tomatoes on it. is it american cheese pizza? no."
+    },
+    "coref_test_37": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000370357.jpg",
+        "only_caption": "an old wooden post with several signs sits next to a tree, in front of a wire fence",
+        "caption": "an old wooden post with several signs sits next to a tree, in front of a wire fence. are they street signs? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 3,
+            "caption": 0,
+            "other": 0
+        },
+        "foil": "an old wooden post with several signs sits next to a tree, in front of a wire fence. are they street signs? yes."
+    },
+    "coref_test_39": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000414026.jpg",
+        "only_caption": "a pair of antique toy horses peers out from the windows of an old building",
+        "caption": "a pair of antique toy horses peers out from the windows of an old building. is this picture in color? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 3,
+            "caption": 0,
+            "other": 0
+        },
+        "foil": "a pair of antique toy horses peers out from the windows of an old building. is this picture in color? yes."
+    },
+    "coref_test_40": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000470589.jpg",
+        "only_caption": "a boy with a balloon posing before a stop sign",
+        "caption": "a boy with a balloon posing before a stop sign. is this outdoors? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a boy with a balloon posing before a stop sign. is this outdoors? no."
+    },
+    "coref_test_41": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000031706.jpg",
+        "only_caption": "a person brushing their dogs teeth with a red toothbrush",
+        "caption": "a person brushing their dogs teeth with a red toothbrush. are they in the bathroom? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a person brushing their dogs teeth with a red toothbrush. are they in the bathroom? yes."
+    },
+    "coref_test_42": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000565956.jpg",
+        "only_caption": "a batter sitting at home plate on a major league baseball field",
+        "caption": "a batter sitting at home plate on a major league baseball field. can you tell what major league team this is? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a batter sitting at home plate on a major league baseball field. can you tell what major league team this is? yes."
+    },
+    "coref_test_43": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000220643.jpg",
+        "only_caption": "a calico cat has its head on the keyboard of a laptop computer",
+        "caption": "a calico cat has its head on the keyboard of a laptop computer. does he have his eyes open? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a calico cat has its head on the keyboard of a laptop computer. does he have his eyes open? no."
+    },
+    "coref_test_44": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000261004.jpg",
+        "only_caption": "a woman is holding her phone over her head while standing on a beach",
+        "caption": "a woman is holding her phone over her head while standing on a beach. is the woman taking a photo with her phone? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a woman is holding her phone over her head while standing on a beach. is the woman taking a photo with her phone? no."
+    },
+    "coref_test_45": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000552120.jpg",
+        "only_caption": "a man playing tennis about to hit a ball",
+        "caption": "a man playing tennis about to hit a ball. can you see his opponent? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man playing tennis about to hit a ball. can you see his opponent? yes."
+    },
+    "coref_test_46": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000084404.jpg",
+        "only_caption": "a hot dog with bun and a pickle with a side of fries",
+        "caption": "a hot dog with bun and a pickle with a side of fries. is this in a restaurant? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 0,
+            "other": 2
+        },
+        "foil": "a hot dog with bun and a pickle with a side of fries. is this in a restaurant? yes."
+    },
+    "coref_test_48": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000386874.jpg",
+        "only_caption": "a cat finding a good spot in owners open luggage bag",
+        "caption": "a cat finding a good spot in owners open luggage bag. is it a big cat? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a cat finding a good spot in owners open luggage bag. is it a big cat? yes."
+    },
+    "coref_test_49": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000154609.jpg",
+        "only_caption": "a man is in the air while wearing a black and purple hat",
+        "caption": "a man is in the air while wearing a black and purple hat. is he doing some kind of sport? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man is in the air while wearing a black and purple hat. is he doing some kind of sport? no."
+    },
+    "coref_test_50": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000080703.jpg",
+        "only_caption": "a man stands bent over in the ready position with a tennis racket between his legs",
+        "caption": "a man stands bent over in the ready position with a tennis racket between his legs. is this outside? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man stands bent over in the ready position with a tennis racket between his legs. is this outside? no."
+    },
+    "coref_test_51": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000176020.jpg",
+        "only_caption": "a group of skiers about to ski on a mountain",
+        "caption": "a group of skiers about to ski on a mountain. is it a big group? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a group of skiers about to ski on a mountain. is it a big group? yes."
+    },
+    "coref_test_52": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000172461.jpg",
+        "only_caption": "a dog on a carpet looking at the legs of a person",
+        "caption": "a dog on a carpet looking at the legs of a person. is this picture in color? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a dog on a carpet looking at the legs of a person. is this picture in color? no."
+    },
+    "coref_test_53": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000131468.jpg",
+        "only_caption": "the clock is sitting on the tree on the grass",
+        "caption": "the clock is sitting on the tree on the grass. is it in a city? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 1,
+            "other": 2
+        },
+        "foil": "the clock is sitting on the tree on the grass. is it in a city? yes."
+    },
+    "coref_test_54": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000324850.jpg",
+        "only_caption": "image of a red lobster restaurant from a street a one-way sign and street light is visible, and a man in an orange shirt is walking toward the entrance",
+        "caption": "image of a red lobster restaurant from a street a one-way sign and street light is visible, and a man in an orange shirt is walking toward the entrance. is it daytime? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "image of a red lobster restaurant from a street a one-way sign and street light is visible, and a man in an orange shirt is walking toward the entrance. is it daytime? no."
+    },
+    "coref_test_55": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000185561.jpg",
+        "only_caption": "a modern bathroom sink sitting on top of a counter",
+        "caption": "a modern bathroom sink sitting on top of a counter. what makes this sink modern? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 0,
+            "other": 1
+        },
+        "foil": "a modern bathroom sink sitting on top of a counter. what makes this sink modern? yes."
+    },
+    "coref_test_56": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000549007.jpg",
+        "only_caption": "a dump truck sitting in a parking lot",
+        "caption": "a dump truck sitting in a parking lot. is this the only vehicle? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a dump truck sitting in a parking lot. is this the only vehicle? yes."
+    },
+    "coref_test_57": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000406653.jpg",
+        "only_caption": "5 planes doing acrobats in the sky leaving trails",
+        "caption": "5 planes doing acrobats in the sky leaving trails. is this an airshow? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "5 planes doing acrobats in the sky leaving trails. is this an airshow? no."
+    },
+    "coref_test_58": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000487201.jpg",
+        "only_caption": "the front of 2 green and yellow dump trucks parked",
+        "caption": "the front of 2 green and yellow dump trucks parked. is this downtown? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "the front of 2 green and yellow dump trucks parked. is this downtown? yes."
+    },
+    "coref_test_59": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000574545.jpg",
+        "only_caption": "a red and white clock tower with latticework and the words taerofx market",
+        "caption": "a red and white clock tower with latticework and the words taerofx market. is this outside? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a red and white clock tower with latticework and the words taerofx market. is this outside? no."
+    },
+    "coref_test_61": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000488570.jpg",
+        "only_caption": "a green bus on the street with a yellow bus in the background",
+        "caption": "a green bus on the street with a yellow bus in the background. is this a busy street? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a green bus on the street with a yellow bus in the background. is this a busy street? yes."
+    },
+    "coref_test_62": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000073638.jpg",
+        "only_caption": "2 zebras in the wild, in the grass with mountains in the background",
+        "caption": "2 zebras in the wild, in the grass with mountains in the background. is it during the day? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "2 zebras in the wild, in the grass with mountains in the background. is it during the day? no."
+    },
+    "coref_test_63": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000193521.jpg",
+        "only_caption": "the man is talking on his cell phone whilst making a strange face as someone else in a ny beanie has a face of shock on a busy street corner",
+        "caption": "the man is talking on his cell phone whilst making a strange face as someone else in a ny beanie has a face of shock on a busy street corner. is it daytime? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "the man is talking on his cell phone whilst making a strange face as someone else in a ny beanie has a face of shock on a busy street corner. is it daytime? yes."
+    },
+    "coref_test_65": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000449230.jpg",
+        "only_caption": "a man with a pair of scissors cuts some kind of wrap from another man's arm",
+        "caption": "a man with a pair of scissors cuts some kind of wrap from another man's arm. is he a doctor? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "a man with a pair of scissors cuts some kind of wrap from another man's arm. is he a doctor? yes."
+    },
+    "coref_test_66": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000049132.jpg",
+        "only_caption": "a car is behind a taxi at a red light",
+        "caption": "a car is behind a taxi at a red light. is this a color picture? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a car is behind a taxi at a red light. is this a color picture? no."
+    },
+    "coref_test_67": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000078236.jpg",
+        "only_caption": "a traffic light flashing in its yellow signal",
+        "caption": "a traffic light flashing in its yellow signal. is it in the city? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a traffic light flashing in its yellow signal. is it in the city? yes."
+    },
+    "coref_test_69": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000146314.jpg",
+        "only_caption": "4 asian women in light blue dresses are posing on a stage holding decorative umbrellas",
+        "caption": "4 asian women in light blue dresses are posing on a stage holding decorative umbrellas. is it raining? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "4 asian women in light blue dresses are posing on a stage holding decorative umbrellas. is it raining? yes."
+    },
+    "coref_test_70": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000122826.jpg",
+        "only_caption": "several people visit a monument statue on a cold day",
+        "caption": "several people visit a monument statue on a cold day. is it in washington? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "several people visit a monument statue on a cold day. is it in washington? no."
+    },
+    "coref_test_71": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000341783.jpg",
+        "only_caption": "a young girl sitting on a dock playing on a cell phone",
+        "caption": "a young girl sitting on a dock playing on a cell phone. is it a smartphone? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a young girl sitting on a dock playing on a cell phone. is it a smartphone? yes."
+    },
+    "coref_test_72": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000332604.jpg",
+        "only_caption": "a street with several buildings and cars driving",
+        "caption": "a street with several buildings and cars driving. does this look like a large city? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a street with several buildings and cars driving. does this look like a large city? yes."
+    },
+    "coref_test_75": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000042157.jpg",
+        "only_caption": "4 toothbrushes -- 2 colored yellow and green, 2 colored yellow and purple -- stand upright",
+        "caption": "4 toothbrushes -- 2 colored yellow and green, 2 colored yellow and purple -- stand upright. are these toothbrushes in a bathroom? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 0,
+            "other": 2
+        },
+        "foil": "4 toothbrushes -- 2 colored yellow and green, 2 colored yellow and purple -- stand upright. are these toothbrushes in a bathroom? yes."
+    },
+    "coref_test_76": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000369874.jpg",
+        "only_caption": "a white bed decorated with pink and yellow flowers",
+        "caption": "a white bed decorated with pink and yellow flowers. is this a bedroom? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a white bed decorated with pink and yellow flowers. is this a bedroom? no."
+    },
+    "coref_test_77": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000080920.jpg",
+        "only_caption": "a boy holding a brown cat outside standing beside a blue car",
+        "caption": "a boy holding a brown cat outside standing beside a blue car. is it sunny? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a boy holding a brown cat outside standing beside a blue car. is it sunny? yes."
+    },
+    "coref_test_78": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000424433.jpg",
+        "only_caption": "many people wearing helmets and skiing down a snowy hill",
+        "caption": "many people wearing helmets and skiing down a snowy hill. is it snowing? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "many people wearing helmets and skiing down a snowy hill. is it snowing? no."
+    },
+    "coref_test_79": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000451072.jpg",
+        "only_caption": "a group of giraffes walk next to a wooden fence",
+        "caption": "a group of giraffes walk next to a wooden fence. are they eating anything? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a group of giraffes walk next to a wooden fence. are they eating anything? yes."
+    },
+    "coref_test_80": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000541928.jpg",
+        "only_caption": "a small, very cramped, odd looking bathroom that is white",
+        "caption": "a small, very cramped, odd looking bathroom that is white. is it colored? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a small, very cramped, odd looking bathroom that is white. is it colored? no."
+    },
+    "coref_test_81": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000332391.jpg",
+        "only_caption": "someone is being detained by 2 people with 2 others looking in the background",
+        "caption": "someone is being detained by 2 people with 2 others looking in the background. is this in an airport? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "someone is being detained by 2 people with 2 others looking in the background. is this in an airport? yes."
+    },
+    "coref_test_82": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000577115.jpg",
+        "only_caption": "a tiled, mosaic round pizza oven stands in the corner in front of a glass display case filled with metal bowls",
+        "caption": "a tiled, mosaic round pizza oven stands in the corner in front of a glass display case filled with metal bowls. is this photo in color? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a tiled, mosaic round pizza oven stands in the corner in front of a glass display case filled with metal bowls. is this photo in color? no."
+    },
+    "coref_test_83": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000507735.jpg",
+        "only_caption": "a man is painted silver paint and is posing on a beach",
+        "caption": "a man is painted silver paint and is posing on a beach. is he painting? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man is painted silver paint and is posing on a beach. is he painting? yes."
+    },
+    "coref_test_84": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000562944.jpg",
+        "only_caption": "a black and white photo of a boy doing tricks with a skateboard",
+        "caption": "a black and white photo of a boy doing tricks with a skateboard. is this photo in color? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a black and white photo of a boy doing tricks with a skateboard. is this photo in color? yes."
+    },
+    "coref_test_86": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000177791.jpg",
+        "only_caption": "people are wearing black standing under red umbrellas",
+        "caption": "people are wearing black standing under red umbrellas. is it raining? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 1,
+            "other": 1
+        },
+        "foil": "people are wearing black standing under red umbrellas. is it raining? yes."
+    },
+    "coref_test_87": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000411239.jpg",
+        "only_caption": "2 motorcycles and a pick up truck parked parallel to each other",
+        "caption": "2 motorcycles and a pick up truck parked parallel to each other. is this in a showroom? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "2 motorcycles and a pick up truck parked parallel to each other. is this in a showroom? yes."
+    },
+    "coref_test_88": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000275692.jpg",
+        "only_caption": "some deers standing in the middle of a road",
+        "caption": "some deers standing in the middle of a road. is it colored? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "some deers standing in the middle of a road. is it colored? no."
+    },
+    "coref_test_89": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000098551.jpg",
+        "only_caption": "a man is in a gym with a racquet in front of a woman with a racquet",
+        "caption": "a man is in a gym with a racquet in front of a woman with a racquet. is it a professional picture? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man is in a gym with a racquet in front of a woman with a racquet. is it a professional picture? yes."
+    },
+    "coref_test_90": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000553329.jpg",
+        "only_caption": "a black bear is walking into a river",
+        "caption": "a black bear is walking into a river. is this a big bear? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a black bear is walking into a river. is this a big bear? no."
+    },
+    "coref_test_91": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000184249.jpg",
+        "only_caption": "a man standing on a boardwalk holding a surfboard",
+        "caption": "a man standing on a boardwalk holding a surfboard. is it in color? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man standing on a boardwalk holding a surfboard. is it in color? no."
+    },
+    "coref_test_92": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000366077.jpg",
+        "only_caption": "a bridge with an underpass surrounded by foreign traffic signs",
+        "caption": "a bridge with an underpass surrounded by foreign traffic signs. is this a wooden bridge? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a bridge with an underpass surrounded by foreign traffic signs. is this a wooden bridge? yes."
+    },
+    "coref_test_93": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000572721.jpg",
+        "only_caption": "3 or 4 giraffes are outside in a field with a shrub or tree",
+        "caption": "3 or 4 giraffes are outside in a field with a shrub or tree. is this in a zoo? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "3 or 4 giraffes are outside in a field with a shrub or tree. is this in a zoo? yes."
+    },
+    "coref_test_94": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000510821.jpg",
+        "only_caption": "gray boxes surrounding a fire hydrant with red knobs",
+        "caption": "gray boxes surrounding a fire hydrant with red knobs. is this outdoors? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "gray boxes surrounding a fire hydrant with red knobs. is this outdoors? no."
+    },
+    "coref_test_96": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000080912.jpg",
+        "only_caption": "a man wearing a button down shirt and patterned tie smiles",
+        "caption": "a man wearing a button down shirt and patterned tie smiles. is this photo in color? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man wearing a button down shirt and patterned tie smiles. is this photo in color? no."
+    },
+    "coref_test_97": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000087960.jpg",
+        "only_caption": "a clean space with a mirror and a disco ball",
+        "caption": "a clean space with a mirror and a disco ball. is this a club? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a clean space with a mirror and a disco ball. is this a club? yes."
+    },
+    "coref_test_99": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000212772.jpg",
+        "only_caption": "a motorcycle parked on the side of a mountainous road",
+        "caption": "a motorcycle parked on the side of a mountainous road. is this a black and white image? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a motorcycle parked on the side of a mountainous road. is this a black and white image? yes."
+    },
+    "coref_test_100": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000145624.jpg",
+        "only_caption": "a white doughnut kitchen bus parked on the street near a parking meter",
+        "caption": "a white doughnut kitchen bus parked on the street near a parking meter. does the bus have a doughnut on it? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 1,
+            "other": 1
+        },
+        "foil": "a white doughnut kitchen bus parked on the street near a parking meter. does the bus have a doughnut on it? yes."
+    },
+    "coref_test_101": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000045450.jpg",
+        "only_caption": "the outside of a comedy club in the middle of a street",
+        "caption": "the outside of a comedy club in the middle of a street. is it night? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "the outside of a comedy club in the middle of a street. is it night? yes."
+    },
+    "coref_test_103": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000167612.jpg",
+        "only_caption": "a few remote controls stacks on 1 another",
+        "caption": "a few remote controls stacks on 1 another. is this a black and white image? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a few remote controls stacks on 1 another. is this a black and white image? yes."
+    },
+    "coref_test_104": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000012310.jpg",
+        "only_caption": "a couple playing a tennis match on a nice day",
+        "caption": "a couple playing a tennis match on a nice day. are they young? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a couple playing a tennis match on a nice day. are they young? yes."
+    },
+    "coref_test_105": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000385006.jpg",
+        "only_caption": "a sink with it's faucet running and hand soap",
+        "caption": "a sink with it's faucet running and hand soap. is it a stainless steel sink? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "a sink with it's faucet running and hand soap. is it a stainless steel sink? yes."
+    },
+    "coref_test_107": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000107888.jpg",
+        "only_caption": "a toilet with a lot of graffiti on the walls surrounding it",
+        "caption": "a toilet with a lot of graffiti on the walls surrounding it. is it a public restroom? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "a toilet with a lot of graffiti on the walls surrounding it. is it a public restroom? no."
+    },
+    "coref_test_109": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000454628.jpg",
+        "only_caption": "a cake stand with different desserts on it",
+        "caption": "a cake stand with different desserts on it. is this indoors? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a cake stand with different desserts on it. is this indoors? no."
+    },
+    "coref_test_110": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000057635.jpg",
+        "only_caption": "a bathtub surround by small blue and white tiles",
+        "caption": "a bathtub surround by small blue and white tiles. is this inside? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a bathtub surround by small blue and white tiles. is this inside? no."
+    },
+    "coref_test_111": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000023887.jpg",
+        "only_caption": "many military aircraft are taking off above a body of water, likely from an aircraft carrier",
+        "caption": "many military aircraft are taking off above a body of water, likely from an aircraft carrier. is it sunny? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 1,
+            "other": 1
+        },
+        "foil": "many military aircraft are taking off above a body of water, likely from an aircraft carrier. is it sunny? yes."
+    },
+    "coref_test_113": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000214004.jpg",
+        "only_caption": "a flock of birds sit on a large rock by the water",
+        "caption": "a flock of birds sit on a large rock by the water. are these seagulls? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 0,
+            "other": 1
+        },
+        "foil": "a flock of birds sit on a large rock by the water. are these seagulls? yes."
+    },
+    "coref_test_114": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000087445.jpg",
+        "only_caption": "many people walking on the sidewalk and others sitting on the steps in a city scene",
+        "caption": "many people walking on the sidewalk and others sitting on the steps in a city scene. is it daytime? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "many people walking on the sidewalk and others sitting on the steps in a city scene. is it daytime? no."
+    },
+    "coref_test_115": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000220675.jpg",
+        "only_caption": "numerous animals are grazing in a large field with grass and bushes",
+        "caption": "numerous animals are grazing in a large field with grass and bushes. are they exotic animals? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "numerous animals are grazing in a large field with grass and bushes. are they exotic animals? yes."
+    },
+    "coref_test_116": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000369282.jpg",
+        "only_caption": "a young boy peeling carrots into a plastic bag",
+        "caption": "a young boy peeling carrots into a plastic bag. is this a color photo? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a young boy peeling carrots into a plastic bag. is this a color photo? no."
+    },
+    "coref_test_117": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000351246.jpg",
+        "only_caption": "the black bed has a shiny grey bedspread and pillows",
+        "caption": "the black bed has a shiny grey bedspread and pillows. is this a twin bed? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 1,
+            "other": 2
+        },
+        "foil": "the black bed has a shiny grey bedspread and pillows. is this a twin bed? yes."
+    },
+    "coref_test_118": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000351712.jpg",
+        "only_caption": "a tennis player extends her racket to hit the ball",
+        "caption": "a tennis player extends her racket to hit the ball. is she wearing a skirt? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a tennis player extends her racket to hit the ball. is she wearing a skirt? no."
+    },
+    "coref_test_119": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000143747.jpg",
+        "only_caption": "white colored statues of men holding up clocks",
+        "caption": "white colored statues of men holding up clocks. is this inside? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "white colored statues of men holding up clocks. is this inside? yes."
+    },
+    "coref_test_120": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000116254.jpg",
+        "only_caption": "a man wearing a vest walking a dog across the street",
+        "caption": "a man wearing a vest walking a dog across the street. is it dark out? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man wearing a vest walking a dog across the street. is it dark out? yes."
+    },
+    "coref_test_121": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000293443.jpg",
+        "only_caption": "2 people playing tennis olympic emblem on fence in purple girl in blue tennis outfit and girl with a red and blue tennis outfit 2 people standing against the wall",
+        "caption": "2 people playing tennis olympic emblem on fence in purple girl in blue tennis outfit and girl with a red and blue tennis outfit 2 people standing against the wall. is this a competition? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "2 people playing tennis olympic emblem on fence in purple girl in blue tennis outfit and girl with a red and blue tennis outfit 2 people standing against the wall. is this a competition? no."
+    },
+    "coref_test_123": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000451662.jpg",
+        "only_caption": "a person on a laptop with a cat lying on their arm",
+        "caption": "a person on a laptop with a cat lying on their arm. can you tell what kind of laptop it is? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 3,
+            "caption": 0,
+            "other": 0
+        },
+        "foil": "a person on a laptop with a cat lying on their arm. can you tell what kind of laptop it is? yes."
+    },
+    "coref_test_124": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000392777.jpg",
+        "only_caption": "a baseball player is finishing his swing at the home plate during a game, while the catcher and umpire stand behind him",
+        "caption": "a baseball player is finishing his swing at the home plate during a game, while the catcher and umpire stand behind him. is it daytime? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 1,
+            "other": 1
+        },
+        "foil": "a baseball player is finishing his swing at the home plate during a game, while the catcher and umpire stand behind him. is it daytime? no."
+    },
+    "coref_test_125": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000574980.jpg",
+        "only_caption": "a handler and 2 people ride on the back of an elephant, passing a stone wall",
+        "caption": "a handler and 2 people ride on the back of an elephant, passing a stone wall. is it children riding the elephant? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 3,
+            "caption": 0,
+            "other": 0
+        },
+        "foil": "a handler and 2 people ride on the back of an elephant, passing a stone wall. is it children riding the elephant? yes."
+    },
+    "coref_test_126": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000342578.jpg",
+        "only_caption": "a sign for horse crossing is on a post in front of a sloping hill",
+        "caption": "a sign for horse crossing is on a post in front of a sloping hill. is this a color picture? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a sign for horse crossing is on a post in front of a sloping hill. is this a color picture? no."
+    },
+    "coref_test_127": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000355065.jpg",
+        "only_caption": "a gray, red and yellow train stopped at the side of the track under a blue sky",
+        "caption": "a gray, red and yellow train stopped at the side of the track under a blue sky. is this a toy train? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a gray, red and yellow train stopped at the side of the track under a blue sky. is this a toy train? yes."
+    },
+    "coref_test_128": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000494563.jpg",
+        "only_caption": "a pitcher is throwing a pitch to a batter in an mlb game in front of a full stadium",
+        "caption": "a pitcher is throwing a pitch to a batter in an mlb game in front of a full stadium. can you see what team it is? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 0,
+            "other": 1
+        },
+        "foil": "a pitcher is throwing a pitch to a batter in an mlb game in front of a full stadium. can you see what team it is? yes."
+    },
+    "coref_test_129": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000578761.jpg",
+        "only_caption": "2 identical buses are parked on a street, next to some apartment buildings",
+        "caption": "2 identical buses are parked on a street, next to some apartment buildings. are they transportation city busses? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "2 identical buses are parked on a street, next to some apartment buildings. are they transportation city busses? no."
+    },
+    "coref_test_130": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000325630.jpg",
+        "only_caption": "a bathroom with 2 sinks and a lot of towels",
+        "caption": "a bathroom with 2 sinks and a lot of towels. is it brightly lit? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a bathroom with 2 sinks and a lot of towels. is it brightly lit? no."
+    },
+    "coref_test_131": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000508102.jpg",
+        "only_caption": "the street sign is blue and says little ethiopia",
+        "caption": "the street sign is blue and says little ethiopia. what country is this in? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 0,
+            "other": 2
+        },
+        "foil": "the street sign is blue and says little ethiopia. what country is this in? yes."
+    },
+    "coref_test_132": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000465837.jpg",
+        "only_caption": "a woman in a brown shirt is gasping",
+        "caption": "a woman in a brown shirt is gasping. is she inside? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a woman in a brown shirt is gasping. is she inside? no."
+    },
+    "coref_test_133": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000242109.jpg",
+        "only_caption": "a young girl shows off her teddy bear through a train window",
+        "caption": "a young girl shows off her teddy bear through a train window. is this in color? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a young girl shows off her teddy bear through a train window. is this in color? yes."
+    },
+    "coref_test_134": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000130808.jpg",
+        "only_caption": "a man in a large body of water parasailing",
+        "caption": "a man in a large body of water parasailing. is this at a beach? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "a man in a large body of water parasailing. is this at a beach? yes."
+    },
+    "coref_test_135": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000471071.jpg",
+        "only_caption": "a group of skiers posed for a picture with a large resort at a distance in the background",
+        "caption": "a group of skiers posed for a picture with a large resort at a distance in the background. is this a modern day photo? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a group of skiers posed for a picture with a large resort at a distance in the background. is this a modern day photo? no."
+    },
+    "coref_test_136": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000249784.jpg",
+        "only_caption": "the scene consists of multiple people standing on a rock patio, and they are surrounded by 3 benches, a garden maze, and buildings",
+        "caption": "the scene consists of multiple people standing on a rock patio, and they are surrounded by 3 benches, a garden maze, and buildings. is this a party? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "the scene consists of multiple people standing on a rock patio, and they are surrounded by 3 benches, a garden maze, and buildings. is this a party? yes."
+    },
+    "coref_test_137": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000093813.jpg",
+        "only_caption": "a cat is laying on a sunny windowsill behind a cabinet",
+        "caption": "a cat is laying on a sunny windowsill behind a cabinet. is this a color picture? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a cat is laying on a sunny windowsill behind a cabinet. is this a color picture? no."
+    },
+    "coref_test_138": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000340748.jpg",
+        "only_caption": "a cheese pizza cooks in a small, dirty oven",
+        "caption": "a cheese pizza cooks in a small, dirty oven. is it a restaurant? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 1,
+            "other": 2
+        },
+        "foil": "a cheese pizza cooks in a small, dirty oven. is it a restaurant? yes."
+    },
+    "coref_test_139": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000493142.jpg",
+        "only_caption": "3 different colored and patterned ties on display",
+        "caption": "3 different colored and patterned ties on display. is this in a store? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "3 different colored and patterned ties on display. is this in a store? no."
+    },
+    "coref_test_140": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000296434.jpg",
+        "only_caption": "the backside of 3 elephants walking down a street",
+        "caption": "the backside of 3 elephants walking down a street. are they on a dirt path? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "the backside of 3 elephants walking down a street. are they on a dirt path? yes."
+    },
+    "coref_test_141": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000459253.jpg",
+        "only_caption": "a man and woman sitting at a table with 15 wine glasses",
+        "caption": "a man and woman sitting at a table with 15 wine glasses. is this an older couple? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man and woman sitting at a table with 15 wine glasses. is this an older couple? yes."
+    },
+    "coref_test_142": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000385479.jpg",
+        "only_caption": "a workman stands on a ladder to fix a traffic light",
+        "caption": "a workman stands on a ladder to fix a traffic light. is this in a city? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a workman stands on a ladder to fix a traffic light. is this in a city? no."
+    },
+    "coref_test_143": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000526661.jpg",
+        "only_caption": "a woman sitting at a tall table working on a laptop",
+        "caption": "a woman sitting at a tall table working on a laptop. is this an office? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a woman sitting at a tall table working on a laptop. is this an office? yes."
+    },
+    "coref_test_144": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000311737.jpg",
+        "only_caption": "2 boys with homemade pizzas on the table in front of them",
+        "caption": "2 boys with homemade pizzas on the table in front of them. do they pizzas look good? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 1,
+            "other": 1
+        },
+        "foil": "2 boys with homemade pizzas on the table in front of them. do they pizzas look good? no."
+    },
+    "coref_test_145": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000297332.jpg",
+        "only_caption": "a large bus is tipping over on the street near buildings",
+        "caption": "a large bus is tipping over on the street near buildings. is there people on this bus? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 1,
+            "caption": 1,
+            "other": 1
+        },
+        "foil": "a large bus is tipping over on the street near buildings. is there people on this bus? yes."
+    },
+    "coref_test_146": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000512753.jpg",
+        "only_caption": "an outside market with large tables all filled with bananas and 1 man selling them",
+        "caption": "an outside market with large tables all filled with bananas and 1 man selling them. is it in color the pic? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "an outside market with large tables all filled with bananas and 1 man selling them. is it in color the pic? no."
+    },
+    "coref_test_147": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000376152.jpg",
+        "only_caption": "a white computer mouse sitting on top of a mouse pad",
+        "caption": "a white computer mouse sitting on top of a mouse pad. is this in color? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "a white computer mouse sitting on top of a mouse pad. is this in color? no."
+    },
+    "coref_test_149": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000416080.jpg",
+        "only_caption": "a barbed wire topped chain link fence with a sign and buildings in the background",
+        "caption": "a barbed wire topped chain link fence with a sign and buildings in the background. is this a city scene? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "a barbed wire topped chain link fence with a sign and buildings in the background. is this a city scene? yes."
+    },
+    "coref_test_150": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000143389.jpg",
+        "only_caption": "a man talking on a cell phone in a parking lot",
+        "caption": "a man talking on a cell phone in a parking lot. is it daytime? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a man talking on a cell phone in a parking lot. is it daytime? no."
+    },
+    "coref_test_151": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000278429.jpg",
+        "only_caption": "a clock with an eagle statue sits atop a white railing",
+        "caption": "a clock with an eagle statue sits atop a white railing. is this clock outside? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a clock with an eagle statue sits atop a white railing. is this clock outside? yes."
+    },
+    "coref_test_152": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000017447.jpg",
+        "only_caption": "a baseball player getting ready to bat during a baseball game",
+        "caption": "a baseball player getting ready to bat during a baseball game. is he she a professional player? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a baseball player getting ready to bat during a baseball game. is he she a professional player? no."
+    },
+    "coref_test_153": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000294553.jpg",
+        "only_caption": "a man driving a horse drawn carriage down a road",
+        "caption": "a man driving a horse drawn carriage down a road. is this amish country? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 2,
+            "caption": 1,
+            "other": 0
+        },
+        "foil": "a man driving a horse drawn carriage down a road. is this amish country? yes."
+    },
+    "coref_test_154": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000315349.jpg",
+        "only_caption": "a yummy looking plate of beef and vegetable stir fry is ready to be eaten",
+        "caption": "a yummy looking plate of beef and vegetable stir fry is ready to be eaten. is this indoors? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a yummy looking plate of beef and vegetable stir fry is ready to be eaten. is this indoors? no."
+    },
+    "coref_test_155": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000084885.jpg",
+        "only_caption": "a lone giraffe walking across a dirt road",
+        "caption": "a lone giraffe walking across a dirt road. is it in a zoo? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a lone giraffe walking across a dirt road. is it in a zoo? yes."
+    },
+    "coref_test_156": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000033648.jpg",
+        "only_caption": "a metal bed with a white blanket and map on the wall",
+        "caption": "a metal bed with a white blanket and map on the wall. is this a world map on the wall? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a metal bed with a white blanket and map on the wall. is this a world map on the wall? no."
+    },
+    "coref_test_157": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000381618.jpg",
+        "only_caption": "2 adult elephants playing with a younger elephant in a field",
+        "caption": "2 adult elephants playing with a younger elephant in a field. do they have tusks? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 2,
+            "other": 1
+        },
+        "foil": "2 adult elephants playing with a younger elephant in a field. do they have tusks? yes."
+    },
+    "coref_test_158": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000447518.jpg",
+        "only_caption": "an elephant standing by some trees with a broken tusk",
+        "caption": "an elephant standing by some trees with a broken tusk. is it an adult elephant? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "an elephant standing by some trees with a broken tusk. is it an adult elephant? no."
+    },
+    "coref_test_159": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000464058.jpg",
+        "only_caption": "an old man riding a wheelchair in the grass",
+        "caption": "an old man riding a wheelchair in the grass. is this in a park? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "an old man riding a wheelchair in the grass. is this in a park? yes."
+    },
+    "coref_test_160": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000321392.jpg",
+        "only_caption": "a girl and boy sitting in the living room and playing a game",
+        "caption": "a girl and boy sitting in the living room and playing a game. are they younger than 5? no.",
+        "classes": "no",
+        "classes_foil": "yes",
+        "mturk": {
+            "foil": 0,
+            "caption": 3,
+            "other": 0
+        },
+        "foil": "a girl and boy sitting in the living room and playing a game. are they younger than 5? yes."
+    },
+    "coref_test_161": {
+        "dataset": "VisDial_v1.0",
+        "original_split": "val",
+        "linguistic_phenomena": "coreference",
+        "image_file": "VisualDialog_val2018_000000366853.jpg",
+        "only_caption": "2 zebras with their heads down are walking along a dirt road",
+        "caption": "2 zebras with their heads down are walking along a dirt road. are they walking away from the camera? yes.",
+        "classes": "yes",
+        "classes_foil": "no",
+        "mturk": {
+            "foil": 1,
+            "caption": 2,
+            "other": 0
+        },
+        "foil": "2 zebras with their heads down are walking along a dirt road. are they walking away from the camera? no."
+    }
+}
