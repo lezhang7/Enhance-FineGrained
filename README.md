@@ -4,13 +4,17 @@ Training code and training data augmentation code for the paper "[Contrasting In
 
 TL;DR: We Propose **two losses** to enhance model's **fine-grained understanding** ability for any model with image-text contrastive loss like CLIP. The two losses are applied on our **generated hard negative** examples.
 
-<img src="/Users/zhangle/Desktop/conference/neurips figures/overview.png" alt="overview" style="zoom:22%;" />
+<img src="https://p.ipic.vip/2vo9it.png" alt="overview" style="zoom:22%;" />
 
 **This repo forks from [OpenCLIP](https://github.com/mlfoundations/open_clip)**, for model and training details, please refer to original repo.
 
+# Checkpoints
+
+**We release both clip-enhanced and xvlm-enhanced checkpoints at [here](https://drive.google.com/drive/folders/1rpt_YpqSatuWTUDT9uMXkU1RUSBfWec1?usp=sharing)**
+
 # Training
 
-The two losses are included in `Enhance-FineGrained/src/open_clip/loss.py`, the training file is at `Enhance-FineGrained/src/training/train.py`. Here are scripts to reproduce the results.
+The two losses are included in `Enhance-FineGrained/src/open_clip/loss.py` `Clip_DALoss`, the training file is at `Enhance-FineGrained/src/training/train.py`. Here are scripts to reproduce the results.
 
 ### 1. Generating Training dataset
 
@@ -34,7 +38,7 @@ The result checkpoint will be at `Enhance-FineGrained/src/Outputs`
 
 # Evaluation
 
-We evaluate our method on three downstream task [ARO](https://github.com/mertyg/vision-language-models-are-bows) [VALSE](https://github.com/Heidelberg-NLP/VALSE) and [VL-CheckList](https://github.com/om-ai-lab/VL-CheckList), and we also provide evaluation code. However, one need go to official github page to download dataset to evaluate on them.
+We evaluate our method on three downstream task [ARO](https://github.com/mertyg/vision-language-models-are-bows), [VALSE](https://github.com/Heidelberg-NLP/VALSE) and [VL-CheckList](https://github.com/om-ai-lab/VL-CheckList), and we also provide evaluation code. However, one need go to official github page to download dataset to evaluate on them.
 
 ### ARO
 
@@ -66,4 +70,4 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 
 # Contact
 
-please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](mailto:le.zhang@mila.quebec)
+please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](

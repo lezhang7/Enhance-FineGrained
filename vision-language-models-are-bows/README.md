@@ -1,73 +1,115 @@
-# Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding
+# When and why vision-language models behave like bags-of-words, and what to do about it? (ICLR 2023 Oral)
 
-Training code and training data augmentation code for the paper "[Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding](https://arxiv.org/abs/2306.08832)" 
+[![ICLR2023 Paper](https://img.shields.io/badge/paper-ICLR2023-brightgreen)](https://openreview.net/forum?id=KRLUvxh8uaX)  [![Medium Blog Post](https://raw.githubusercontent.com/aleen42/badges/master/src/medium.svg)](https://towardsdatascience.com/your-vision-language-model-might-be-a-bag-of-words-30b1beaef7f8) [![Colab](https://camo.githubusercontent.com/84f0493939e0c4de4e6dbe113251b4bfb5353e57134ffd9fcab6b8714514d4d1/68747470733a2f2f636f6c61622e72657365617263682e676f6f676c652e636f6d2f6173736574732f636f6c61622d62616467652e737667)](https://colab.research.google.com/drive/1Rmn8CYXRFg4eC458vkBHwAdVKgS03e5D?usp=sharing)
 
-TL;DR: We Propose **two losses** to enhance model's **fine-grained understanding** ability for any model with image-text contrastive loss like CLIP. The two losses are applied on our **generated hard negative** examples.
 
-<img src="https://p.ipic.vip/2vo9it.png" alt="overview" style="zoom:22%;" />
+Experiments and data for the paper "When and why vision-language models behave like bags-of-words, and what to do about it?". <br>
+This paper got an Oral (notable-top-5%) at ICLR 2023! You can find our camera-ready version [here](https://openreview.net/forum?id=KRLUvxh8uaX).
 
-**This repo forks from [OpenCLIP](https://github.com/mlfoundations/open_clip)**, for model and training details, please refer to original repo.
 
-# Checkpoints
+**Imporant Note**: Thank you for your interest. I apologize for the delay in releasing the code and the camera-ready version, I will do my best to make up for the missing bits as soon as possible. I am currently in Turkey after the devastating [Turkey-Syria earthquake](https://en.wikipedia.org/wiki/2023_Turkey%E2%80%93Syria_earthquake). Not only me, but also tens of thousands of people lost their families and homes. Please consider [donating](https://ahbap.org/), and at the very least please ask your friends with connections to the regions how they are doing. 
 
-**We release both clip-enhanced and xvlm-enhanced checkpoints at [here](https://drive.google.com/drive/folders/1rpt_YpqSatuWTUDT9uMXkU1RUSBfWec1?usp=sharing)**
+Below we give details about how to easily use our dataset and models, and reproduce our experiments.
 
-# Training
-
-The two losses are included in `Enhance-FineGrained/src/open_clip/loss.py` `Clip_DALoss`, the training file is at `Enhance-FineGrained/src/training/train.py`. Here are scripts to reproduce the results.
-
-### 1. Generating Training dataset
-
-The training data is generated based on COCO 2014, so you can either [download](https://cocodataset.org/#download) by yourself and assign coco `dataset_path` in `dataset.py` or **you can simply run following script to download and generate** dataset
-
-``````python
-cd data/
-bash prepare_dataset.sh
-``````
-
-### 2. Training 
-
-you need to specify training parameters in scrips/run_all.sh such as  `--gres=gpu:a100:2` and `batch_size`, please refer to this script file to see more details, to simply run the training, using following scritps
-
+# ARO Benchmark
+## Visual Genome Relation & Attribution Datasets
+It's very easy to use VG-Relation and VG-Attribution datasets. Here's an example:
 ```python
-cd scripts/
-bash run_all.sh
+import clip
+from dataset_zoo import VG_Relation, VG_Attribution
+
+model, image_preprocess = clip.load("ViT-B/32", device="cuda")
+
+root_dir="/path/to/aro/datasets"
+# Setting download=True will download the dataset to `root_dir` if it's not already there. 
+# For VG-R and VG-A, this is a 1GB zip file that is a subset of GQA.
+
+vgr_dataset = VG_Relation(image_preprocess=preprocess, download=True, root_dir=root_dir)
+vga_dataset = VG_Attribution(image_preprocess=preprocess, download=True, root_dir=root_dir)
+
+# Do anything with the dataset. Each item will look like this : 
+# item = {"image_options": [image], "caption_options": [false_caption, true_caption]}
 ```
 
-The result checkpoint will be at `Enhance-FineGrained/src/Outputs`
+## COCO-Order and Flickr30k-Order Datasets
+These datasets require the COCO and Flickr30k retrieval datasets. We provided the interface to download COCO (e.g. set `download=True` in the constructor), however, for Flickr30k, you need to sign up and download it yourself. You can find the Flickr30k retrieval dataset [here](https://forms.illinois.edu/sec/229675).
 
-# Evaluation
+```python
+from dataset_zoo import COCO_Order, Flickr30k_Order
 
-We evaluate our method on three downstream task [ARO](https://github.com/mertyg/vision-language-models-are-bows), [VALSE](https://github.com/Heidelberg-NLP/VALSE) and [VL-CheckList](https://github.com/om-ai-lab/VL-CheckList), and we also provide evaluation code. However, one need go to official github page to download dataset to evaluate on them.
+coco_order_dataset = COCO_Order(image_preprocess=preprocess, download=True, root_dir=root_dir) 
+flickr_order_dataset = Flickr30k_Order(image_preprocess=preprocess, root_dir=root_dir)
+```
 
-### ARO
 
-Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-models-are-bows`, to reproduce results, you need 
+# Quick reproducibility
+See the notebook in `notebooks/` for a quick way to reproduce some of the results in the paper. We provide a notebook to reproduce the VG-Relation and VG-Attribution datasets [here](notebooks/Replicate%20ARO!%20VG-Relation%2C%20VG-Attribution.ipynb).
 
-1. set up environment by running `bash Enhance-FineGrained/vision-language-models-are-bows/scripts/create_environment.sh`
-2. `cd Enhance-FineGrained/vision-language-models-are-bows/scripts` and change the checkpoint path in `reproduce_aro.sh`, then **run the script to reproduce the results**. *Note that dataset will be download automatically*
+## Models
+We experiment with a bunch of models here, and let us know if you have any other you would like to add here. You can find BLIP, CLIP, Flava, and XVLM. Please see `model_zoo/` folder for more details. This work is heavily inspired from, and would not be possible without the awesome repos for [BLIP](https://github.com/salesforce/BLIP), [CLIP](https://github.com/openai/CLIP), [Flava](https://huggingface.co/docs/transformers/model_doc/flava), [OpenCLIP](https://github.com/mlfoundations/open_clip), and [XVLM](https://github.com/zengyan-97/X-VLM). A huge, huge thanks to them for open-sourcing their models / implementations! Here's a summary of what we have now: 
 
-### VALSE
+Model Name | Model File in this Repo | Repo |
+--- | --- | --- |
+BLIP | [BLIP implementation](model_zoo/blip_models.py) | https://github.com/salesforce/BLIP |
+CLIP | [CLIP implementation](model_zoo/clip_models.py) | https://github.com/openai/CLIP |
+Flava | [Flava implementation](model_zoo/flava.py) | https://huggingface.co/facebook/flava-full |
+XVLM | [XVLM implementation](model_zoo/xvlm_models.py) | https://github.com/zengyan-97/X-VLM |
+NegCLIP | NegCLIP was trained with a fork of the `open_clip` repo. Find the ckpt info [here](model_zoo/__init__.py#L66)| https://github.com/vinid/open_clip |
+COCA & CLIP on LAION | We added the usage of the other models in the open_clip repo.| https://github.com/mlfoundations/open_clip |
 
-1. Evaluation code for VALSE is included in `Enhance-FineGrained/VALSE`, to reproduce results on valse, please download dataset [here](https://github.com/Heidelberg-NLP/VALSE) first. **Then replace dataset** path in `Enhance-FineGrained/VALSE/clip_valse_eval.py` `Enhance-FineGrained/VALSE/xvlm_valse_eval.py`
 
-2. replace `$checkpoint` in `Enhance-FineGrained/VALSE/scripts` then run the scripts, evaluation results will be included in `/home/mila/l/le.zhang/scratch/Enhance-FineGrained/VALSE/output`
+## ARO Results
+
+
+## Order-Perturbed Retrieval Results
+
+
+## NegCLIP Training
+We trained the NegCLIP with a fork of the `open_clip` repo. You can find the fork [here](https://github.com/vinid/open_clip). Our modifications are super minor and you will find an detailed description of the main edits [here](https://github.com/vinid/neg_clip#negclip-implementation).
+
+We plan to add support for the distributed setting in the future. However, we trained the model using a single GPU (which is quite a bit of a limitation). Here's the command to reproduce results:
+```base
+CUDA_VISIBLE_DEVICES=0 python -m training.main \
+    --train-data="./mscoco_with_negatives_training.csv" \
+    --batch-size=256 \
+    --epochs=5 \
+    --name="negclip_256_1e-6" \
+    --lr=1e-6 \
+    --val-data="./mscoco_with_negatives_valid.csv"  \
+    --logs="./logs/negCLIP/" \
+    --pretrained="openai" \
+    --model="ViT-B-32"\
+    --workers 14 \
+    --warmup 50
+```
+Note here that `batch_size=256` would result in a matrix of size `512x1024` with negatives.
+
 
 # Citation
+If you use this code or data, please consider citing our paper:
 
-``````
-@misc{zhang2023contrasting,
-      title={Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding}, 
-      author={Le Zhang and Rabiul Awal and Aishwarya Agrawal},
-      year={2023},
-      eprint={2306.08832},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+```
+@inproceedings{
+  yuksekgonul2023when,
+  title={When and why Vision-Language Models behave like  Bags-of-Words, and what to do about it?},
+  author={Mert Yuksekgonul and Federico Bianchi and Pratyusha   Kalluri and Dan Jurafsky and James Zou},
+  booktitle={International Conference on Learning Representations},
+  year={2023},
+  url={https://openreview.net/forum?id=KRLUvxh8uaX}
 }
-``````
+```
 
 
+## TODO
+<details>
+<summary> Current TODO List.</summary>
 
-# Contact
+| Name | Description | Status |
+| --- | --- | --- |
+| Add support for distributed training | We trained NegCLIP with a single GPU, and we plan to add support for distributed training in the future. | :white_check_mark: |
+| Add negative generation | How to generate negatives for negclip. This could also be on the forked repo. | :white_check_mark: |
 
-please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](
+</details>
+
+# Contact 
+Please let us know if you have further questions or comments. You can reach out to me at `merty@stanford.edu`. 
