@@ -222,12 +222,12 @@ class Clip_DALoss(nn.Module):
         
     def forward(self, image_features, text_features,valid_caption_mask, logit_scale, thresholds):
         """
-        ranking loss doesn't support local_loss and use_horovod 
+        cross-modal ranking loss doesn't support local_loss and use_horovod 
 
         Different Losses:
-            - hardnegative: standard clip contrastive loss, assuming hard-negatives as extra negative for computing logits_per_image, logits_per_text is the same as clip
-            - tec_loss: standard clip contrastive loss + contrastive loss on text embeddings (between ground truth caption embedding and hard-negative caption embedding)
-            - atr_loss: standard clip contrastive loss + rank loss between gt pair and hg pair
+            - hard negative: standard clip contrastive loss, assuming hard-negatives as extra negative for computing logits_per_image, logits_per_text is the same as clip
+            - itc_loss: standard clip contrastive loss + contrastive loss on text embeddings (between ground truth caption embedding and hard-negative caption embedding)
+            - cmr_loss: standard clip contrastive loss + rank loss between gt pair and hg pair
         """
         device = image_features.device
         atr_loss,tec_loss=0.0,0.0
@@ -249,35 +249,21 @@ class Clip_DALoss(nn.Module):
                 #extra hard negative loss
                 if self.hardnegative:
                     all_text_features=torch.cat([gt_all_text_features,da_all_text_features])
-                    logits_per_image = logit_scale * all_image_features @ all_text_features.T # batch_size * 4xbatch_size
-                    
-                    # applying this would make inferior performance
-                    # hardnegative_caption_mask=torch.cat((torch.ones(gt_all_text_features.shape[0],device=all_valid_caption_mask.device),all_valid_caption_mask.flatten()))
-                    # hardnegative_caption_mask=((hardnegative_caption_mask-1)*99999).unsqueeze(0).expand(logits_per_image.shape)
-                    # logits_per_image+=hardnegative_caption_mask
+                    logits_per_image = logit_scale * all_image_features @ all_text_features.T # batch_size * 4xbatch_size       
                 else:
                     logits_per_image = logit_scale * all_image_features @ gt_all_text_features.T
 
                 logits_per_text = logit_scale * gt_all_text_features @ all_image_features.T
 
-                # rank loss
+                # cross-modal rank loss
                 if self.atr_loss:
                     da_logits_per_image= logit_scale * (da_all_text_features.reshape(gt_len,-1,feature_size)@ all_image_features.unsqueeze(-1)).squeeze() * all_valid_caption_mask
                     atr_loss,thresholds=self.get_atr_loss(logits_per_image,da_logits_per_image,all_valid_caption_mask,thresholds)
                 
-                # discriminative loss
+                # intra-modal contrastive loss
                 if self.tec_loss:
                     text_embedding_matrix=logit_scale * gt_all_text_features @ da_all_text_features.T  #(all_batch_size,4*all_batch_size)
-                    # dis_caption_mask=((all_valid_caption_mask.flatten()-1)*99999).unsqueeze(0).expand(text_embedding_matrix.shape)
-                    # text_embedding_matrix+=dis_caption_mask
                     tec_loss+=self.get_tec_loss(logits_per_image,text_embedding_matrix)
-
-                # if self.tec_loss in ["image","all"]:
-                #     image_embedding_matrix=logit_scale* all_image_features@all_image_features.T
-                #     n,m=image_embedding_matrix.shape
-                #     assert n==m
-                #     image_embedding_matrix_off_diag=image_embedding_matrix.flatten()[:-1].view(n-1,n+1)[:,1:].flatten().reshape(image_embedding_matrix.shape[0],-1)
-                #     tec_loss+=self.tec_loss(logits_per_image,image_embedding_matrix_off_diag)
 
         else:
         # not updating very long time
@@ -293,17 +279,8 @@ class Clip_DALoss(nn.Module):
                 da_logits_per_image=  logit_scale * (da_text_features.reshape(gt_len,-1,feature_size)@ image_features.unsqueeze(-1)).squeeze() * valid_caption_mask
                 atr_loss,thresholds=self.get_atr_loss(logits_per_image,da_logits_per_image,valid_caption_mask,thresholds)
             if self.tec_loss:
-                #contrastive loss between caption and hard-negative captions
                 text_embedding_matrix=logit_scale * gt_text_features @ da_text_features.T #(batch_size,4*batch_size)
-                tec_loss=self.get_tec_loss(logits_per_image,text_embedding_matrix)
-            # if self.tec_loss in ["image","all"]:
-            #     #contrastive loss between images
-            #     image_embedding_matrix=logit_scale* image_features@image_features.T
-            #     n,m=image_embedding_matrix.shape
-            #     assert n==m
-            #     image_embedding_matrix_off_diag=image_embedding_matrix.flatten()[:-1].view(n-1,n+1)[:,1:].flatten().reshape(image_embedding_matrix.shape[0],-1)
-            #     tec_loss+=self.get_tec_loss(logits_per_image,image_embedding_matrix_off_diag)
-        # calculated ground-truth and cache if enabled
+                tec_loss=self.get_tec_loss(logits_per_image,text_embedding_matrix)         
         num_logits = logits_per_image.shape[0]
         if self.prev_num_logits != num_logits or device not in self.labels:
             labels = torch.arange(num_logits, device=device, dtype=torch.long)
