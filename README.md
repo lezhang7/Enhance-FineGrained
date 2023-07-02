@@ -58,19 +58,21 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 
 ### VL-CheckList
 
-![Screenshot 2023-07-01 at 8.40.28 PM](https://p.ipic.vip/dm5adr.png)Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
+<img src="https://p.ipic.vip/dm5adr.png" alt="Screenshot 2023-07-01 at 8.40.28 PM" style="zoom:50%;" />Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
 
 ### :star2: SugarCrepe
 
-[![Screenshot 2023-07-01 at 8.40.32 PM](https://p.ipic.vip/4ba1ok.png)SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) is a benchmark for faithful vision-language compositionality evaluation. This dataset **fix a several biases** in all above benchmarks *rendering them hackable that blind models with no access to the image outperform state-of-the-art vision-language models*. 
+<img src="https://p.ipic.vip/4ba1ok.png" alt="Screenshot 2023-07-01 at 8.40.32 PM" style="zoom:50%;" />
+
+[SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) is a benchmark for faithful vision-language compositionality evaluation. This dataset **fix a several biases** in all above benchmarks *rendering them hackable that blind models with no access to the image outperform state-of-the-art vision-language models*. 
 
 to evaluate on this dataset, simply clone their repo and follow their installation setup, and assign retrained to our checkpoints
 
-```python main_eval.py --model RN50 \ 
-    --pretrained #our_checkpoint_path eg. clip_all.pt \
-    --output ./output \ 
+```python
+python main_eval.py --model ViT-B-32 --pretrained Enhance-FineGrained/clip/epoch_5.pt \
+    --output ./output \
     --coco_image_root ./data/coco/images/val2017/ \
-    --data_root ./data/ \```
+    --data_root ./data/ \
 ```
 
 
