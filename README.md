@@ -44,6 +44,8 @@ We evaluate our method on four downstream task [ARO](https://github.com/mertyg/v
 
 ### ARO
 
+![Screenshot 2023-07-01 at 8.40.22 PM](https://p.ipic.vip/jjzo57.png)
+
 Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-models-are-bows`, to reproduce results, you need 
 
 1. set up environment by running `bash Enhance-FineGrained/vision-language-models-are-bows/scripts/create_environment.sh`
@@ -56,11 +58,11 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 
 ### VL-CheckList
 
-Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
+![Screenshot 2023-07-01 at 8.40.28 PM](https://p.ipic.vip/dm5adr.png)Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
 
 ### :star2: SugarCrepe
 
-[SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) is a benchmark for faithful vision-language compositionality evaluation. This dataset **fix a several biases** in all above benchmarks *rendering them hackable that blind models with no access to the image outperform state-of-the-art vision-language models*. 
+[![Screenshot 2023-07-01 at 8.40.32 PM](https://p.ipic.vip/4ba1ok.png)SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) is a benchmark for faithful vision-language compositionality evaluation. This dataset **fix a several biases** in all above benchmarks *rendering them hackable that blind models with no access to the image outperform state-of-the-art vision-language models*. 
 
 to evaluate on this dataset, simply clone their repo and follow their installation setup, and assign retrained to our checkpoints
 
@@ -90,4 +92,4 @@ to evaluate on this dataset, simply clone their repo and follow their installati
 
 # :email: Contact
 
-please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](mailto:le.zhang@mila.quebec)
+please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](
