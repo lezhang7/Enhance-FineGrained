@@ -19,13 +19,15 @@ bs=1024
 # model=xvlm-coco
 # model=NegCLIP
 model=ours
-checkpoint=vision-language-models-are-bows/~/.cache/itchn_atr0.2_mean_tec0.3/checkpoint_epoch_0.pt
+checkpoint=/home/mila/l/le.zhang/scratch/Enhance-FineGrained/clip/clip_all.pt
 
 
-cd Enhance-FineGrained/vision-language-models-are-bows
+cd ../
 
-
-for dataset in VG_Relation VG_Attribution COCO_Retrieval
+# VG-R AND VG-A
+for dataset in VG_Relation VG_Attribution 
 do
-    python3 main_aro.py --dataset=$dataset --model-name=$model --device=cuda --batch-size $bs --resume=$checkpoint
+    python3 main_aro.py --dataset=$dataset --model-name=$model --device=cuda --batch-size=$bs --resume=$checkpoint --download  
 done
+# Standard COCO Retrieval
+python3 main_retrieval.py --dataset=COCO_Retrieval --model-name=$model --resume=$resume --batch-size=$bs --device=cuda --download  

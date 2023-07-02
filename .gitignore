@@ -160,3 +160,5 @@ core.*
 /wandb/
 /cc3m/
 /src/itr_results/
+/clip/
+/vision-language-models-are-bows/~/

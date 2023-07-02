@@ -8,7 +8,7 @@ TL;DR: We Propose **two losses** to enhance model's **fine-grained understanding
 
 **This repo forks from [OpenCLIP](https://github.com/mlfoundations/open_clip)**, for model and training details, please refer to original repo.
 
-# Checkpoints
+# :ballot_box_with_check: Checkpoints
 
 **We release both clip-enhanced and xvlm-enhanced checkpoints at [here](https://drive.google.com/drive/folders/1rpt_YpqSatuWTUDT9uMXkU1RUSBfWec1?usp=sharing)**
 
@@ -36,9 +36,11 @@ bash run_all.sh
 
 The result checkpoint will be at `Enhance-FineGrained/src/Outputs`
 
+
+
 # Evaluation
 
-We evaluate our method on three downstream task [ARO](https://github.com/mertyg/vision-language-models-are-bows), [VALSE](https://github.com/Heidelberg-NLP/VALSE) and [VL-CheckList](https://github.com/om-ai-lab/VL-CheckList), and we also provide evaluation code. However, one need go to official github page to download dataset to evaluate on them.
+We evaluate our method on four downstream task [ARO](https://github.com/mertyg/vision-language-models-are-bows), [VALSE](https://github.com/Heidelberg-NLP/VALSE) and [VL-CheckList](https://github.com/om-ai-lab/VL-CheckList), and very recent [SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) and we also provide evaluation code. However, one need go to official github page to download dataset to evaluate on them.
 
 ### ARO
 
@@ -50,12 +52,30 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 ### VALSE
 
 1. Evaluation code for VALSE is included in `Enhance-FineGrained/VALSE`, to reproduce results on valse, please download dataset [here](https://github.com/Heidelberg-NLP/VALSE) first. **Then replace dataset** path in `Enhance-FineGrained/VALSE/clip_valse_eval.py` `Enhance-FineGrained/VALSE/xvlm_valse_eval.py`
-
 2. replace `$checkpoint` in `Enhance-FineGrained/VALSE/scripts` then run the scripts, evaluation results will be included in `/home/mila/l/le.zhang/scratch/Enhance-FineGrained/VALSE/output`
 
-# Citation
+### VL-CheckList
 
-``````
+Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
+
+### :star2: SugarCrepe
+
+[SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) is a benchmark for faithful vision-language compositionality evaluation. This dataset **fix a several biases** in all above benchmarks *rendering them hackable that blind models with no access to the image outperform state-of-the-art vision-language models*. 
+
+to evaluate on this dataset, simply clone their repo and follow their installation setup, and assign retrained to our checkpoints
+
+```python main_eval.py --model RN50 \ 
+    --pretrained #our_checkpoint_path eg. clip_all.pt \
+    --output ./output \ 
+    --coco_image_root ./data/coco/images/val2017/ \
+    --data_root ./data/ \```
+```
+
+
+
+# :paperclip: Citation
+
+``````bibtex
 @misc{zhang2023contrasting,
       title={Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding}, 
       author={Le Zhang and Rabiul Awal and Aishwarya Agrawal},
@@ -68,6 +88,6 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 
 
 
-# Contact
+# :email: Contact
 
-please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](
+please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](mailto:le.zhang@mila.quebec)

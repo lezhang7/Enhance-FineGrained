@@ -41,45 +41,36 @@ def update_json(json_path, value:dict):
     with open(json_path, "w") as f:
         json.dump(json_data, f, indent=6)
 # check if json file has key
-def check_json(json_path, key:str ,epoch_num:str):
+def check_json(json_path, key:str ):
     # if exists return True
     if os.path.exists(json_path):
         with open(json_path, "r") as f:
             json_data = json.load(f)
         if key in json_data.keys():
-            if epoch_num in json_data[key].keys():
-                return True 
+            return True 
     return False
     
 def main(args):
 
-    epoch_num=None
-    if args.resume:
-        if args.model_name=='ours':
-            resume=re.findall(r'Outputs/(.*?)/checkpoints',args.resume)[0]
-        elif args.model_name=='xvlm-coco':
-            resume=re.findall(r'.cache/(.*?)/checkpoint',args.resume)[0]
-        else:
-            resume=args.resume
-        epoch_num=re.findall(r"(epoch.*).pt",args.resume)[0]    
+   
+    if args.resume and args.resume.endswith(".pt"):
+        match = re.search(r'([^/]+)\.pt$', args.resume)
+        resume=f"{args.model_name}_{match.group(1)}"
     else:
         resume=args.model_name
-    if not epoch_num:
-        epoch_num="pretrained"
     result_path=os.path.join("./", f"{args.dataset}.json")
     result={}
-    model_checkpoint=resume if args.model_name in ["ours","xvlm-coco"] else args.model_name
-    if check_json(result_path,model_checkpoint,epoch_num):
-        raise ValueError(f"result_key: {model_checkpoint}_{epoch_num} already exists") 
+    if check_json(result_path,resume):
+        raise ValueError(f"resume: {resume} already exists") 
     else:
-        print(f"evaluating result_key: {model_checkpoint}_{epoch_num} on {args.dataset}")
+        print(f"evaluating resume: {resume} on {args.dataset}")
     
     seed_all(args.seed)
     
    
     # path
    
-    output_file=os.path.join("./outputs/"+resume+"_"+epoch_num+".pt")
+    output_file=os.path.join("./outputs/"+resume)
     print(f"Saving results to {output_file}")
    
 
@@ -113,11 +104,11 @@ def main(args):
     acc=df['Accuracy'].mean()
     print(f"{args.dataset} acc: {acc}")
  
-    result={model_checkpoint:{epoch_num:acc}}
+    result={resume:acc}
     update_json(result_path,result)
 
-    os.makedirs(output_file,exist_ok=True)
-    df.to_csv(os.path.join(output_file,f"{args.dataset}.csv"))
+    # os.makedirs(output_file,exist_ok=True)
+    # df.to_csv(os.path.join(output_file,f"{args.dataset}.csv"))
 
 
     
