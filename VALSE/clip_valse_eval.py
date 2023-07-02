@@ -85,34 +85,26 @@ def update_json(json_path, value:dict):
     with open(json_path, "w") as f:
         json.dump(json_data, f, indent=6)
 # check if json file has key
-def check_json(json_path, key:str ,epoch_num:str):
+def check_json(json_path, key:str ):
     # if exists return True
     if os.path.exists(json_path):
         with open(json_path, "r") as f:
             json_data = json.load(f)
         if key in json_data.keys():
-            if epoch_num in json_data[key].keys():
-                return True 
+            return True 
     return False
 def main(args):
     os.makedirs(args.output_dir,exist_ok=True)
 
-    if "checkpoints" in args.pretrained:
-        checkpoint=re.findall(r'Outputs/(.*?)/checkpoints',args.pretrained)[0]
-        epoch_num=re.findall(r"(epoch.*).pt",args.pretrained)[0]
-        result_key=f"{checkpoint}"
-    elif "negclip" in args.pretrained:
-        result_key=f"{args.model_name}_negclip"
-    else:
-        result_key=f"{args.model_name}_{args.pretrained}"
+    result_key=f"{args.model_name}_{args.pretrained}"
     
     
 
-    output_dir=os.path.join(args.output_dir,"result_clip_hyperparams_search.json")
-    if check_json(output_dir,result_key,epoch_num):
+    output_dir=os.path.join(args.output_dir,"result_clip.json")
+    if check_json(output_dir,result_key):
         raise ValueError(f"result_key: {result_key} already exists") 
     else:
-        print(f"evaluating result_key: {result_key} at epoch {epoch_num}")
+        print(f"evaluating result_key: {result_key}")
     device=torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model, _, image_preprocess = open_clip.create_model_and_transforms('ViT-B-32', pretrained=args.pretrained, device=device)
     tokenizer = open_clip.get_tokenizer('ViT-B-32')
@@ -167,7 +159,7 @@ def main(args):
         category_results.append(str(round(acc/len(splits),1)))
     category_results.append(str(round(overall_results['avg'],1)))
     overall_results['latex_results']='&'.join(category_results)
-    result={result_key:{epoch_num:overall_results}}
+    result={result_key:overall_results}
     update_json(output_dir,result)
     
 # define update json function
