@@ -94,4 +94,4 @@ python main_eval.py --model ViT-B-32 --pretrained Enhance-FineGrained/clip/epoch
 
 # :email: Contact
 
-please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](
+please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](mailto:le.zhang@mila.quebec)
