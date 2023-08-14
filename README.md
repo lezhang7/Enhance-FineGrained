@@ -1,6 +1,6 @@
 # Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding
 
-Training code and training data augmentation code for the paper "[Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding](https://arxiv.org/abs/2306.08832)" 
+:page_with_curl: "[Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding](https://arxiv.org/abs/2306.08832)" 
 
 TL;DR: We Propose **two losses** to enhance model's **fine-grained understanding** ability for any model with image-text contrastive loss like CLIP. The two losses are applied on our **generated hard negative** examples.
 
