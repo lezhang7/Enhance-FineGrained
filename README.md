@@ -4,7 +4,7 @@ Training code and training data augmentation code for the paper "[Contrasting In
 
 TL;DR: We Propose **two losses** to enhance model's **fine-grained understanding** ability for any model with image-text contrastive loss like CLIP. The two losses are applied on our **generated hard negative** examples.
 
-<img src="https://p.ipic.vip/2vo9it.png" alt="overview" style="zoom:22%;" />
+![overview](https://p.ipic.vip/1sczcy.png)
 
 **This repo forks from [OpenCLIP](https://github.com/mlfoundations/open_clip)**, for model and training details, please refer to original repo.
 
@@ -42,9 +42,9 @@ The result checkpoint will be at `Enhance-FineGrained/src/Outputs`
 
 We evaluate our method on four downstream task [ARO](https://github.com/mertyg/vision-language-models-are-bows), [VALSE](https://github.com/Heidelberg-NLP/VALSE) and [VL-CheckList](https://github.com/om-ai-lab/VL-CheckList), and very recent [SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) and we also provide evaluation code. However, one need go to official github page to download dataset to evaluate on them.
 
-### ARO
 
-![Screenshot 2023-07-01 at 8.40.22 PM](https://p.ipic.vip/jjzo57.png)
+
+### ARO![Screenshot 2023-08-14 at 10.59.26 AM](https://p.ipic.vip/bzf03m.png)
 
 Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-models-are-bows`, to reproduce results, you need 
 
@@ -56,9 +56,9 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 1. Evaluation code for VALSE is included in `Enhance-FineGrained/VALSE`, to reproduce results on valse, please download dataset [here](https://github.com/Heidelberg-NLP/VALSE) first. **Then replace dataset** path in `Enhance-FineGrained/VALSE/clip_valse_eval.py` `Enhance-FineGrained/VALSE/xvlm_valse_eval.py`
 2. replace `$checkpoint` in `Enhance-FineGrained/VALSE/scripts` then run the scripts, evaluation results will be included in `/home/mila/l/le.zhang/scratch/Enhance-FineGrained/VALSE/output`
 
-### VL-CheckList
+### VL-CheckList![Screenshot 2023-08-14 at 10.59.26 AM](https://p.ipic.vip/2wuhar.png)
 
-<img src="https://p.ipic.vip/dm5adr.png" alt="Screenshot 2023-07-01 at 8.40.28 PM" style="zoom:50%;" />Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
+Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
 
 ### :star2: SugarCrepe
 
@@ -75,7 +75,9 @@ python main_eval.py --model ViT-B-32 --pretrained Enhance-FineGrained/clip/epoch
     --data_root ./data/ \
 ```
 
+### Image-text Retrieval
 
+<img src="https://p.ipic.vip/r3rdih.png" alt="Screenshot 2023-08-14 at 11.12.48 AM" style="zoom: 50%;" />
 
 # :paperclip: Citation
 
@@ -95,3 +97,4 @@ python main_eval.py --model ViT-B-32 --pretrained Enhance-FineGrained/clip/epoch
 # :email: Contact
 
 please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](mailto:le.zhang@mila.quebec)
+
