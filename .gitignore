@@ -162,3 +162,4 @@ core.*
 /src/itr_results/
 /clip/
 /vision-language-models-are-bows/~/
+/experiments/

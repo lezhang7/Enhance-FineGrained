@@ -60,6 +60,8 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 
 Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
 
+we provide script at [here](https://github.com/rabiulcste/vl_checklist/tree/ca0c68d1f457f670139feb75a6b884adff88aeee)
+
 ### :star2: SugarCrepe
 
 <img src="https://p.ipic.vip/4ba1ok.png" alt="Screenshot 2023-07-01 at 8.40.32 PM" style="zoom:50%;" />
@@ -77,7 +79,7 @@ python main_eval.py --model ViT-B-32 --pretrained Enhance-FineGrained/clip/epoch
 
 ### Image-text Retrieval
 
-<img src="https://p.ipic.vip/r3rdih.png" alt="Screenshot 2023-08-14 at 11.12.48 AM" style="zoom: 50%;" />
+<img src="https://p.ipic.vip/z9h27q.png" alt="Screenshot 2023-08-15 at 3.14.32 PM" style="zoom:50%;" />
 
 # :paperclip: Citation
 
@@ -97,4 +99,3 @@ python main_eval.py --model ViT-B-32 --pretrained Enhance-FineGrained/clip/epoch
 # :email: Contact
 
 please let us know if you have further questions or comments, reach out to [le.zhang@mila.quebec](mailto:le.zhang@mila.quebec)
-
