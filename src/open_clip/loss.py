@@ -330,7 +330,7 @@ class Clip_DALoss(nn.Module):
         """
         gt_similarity=gt_logits_per_image.diag().reshape(-1,1)
         logtis_matrix=torch.cat([gt_similarity,embedding_matrix],dim=-1)
-        labels=torch.ones(logtis_matrix.shape[0],device=gt_similarity.device,dtype=torch.long)
+        labels=torch.zeros(logtis_matrix.shape[0],device=gt_similarity.device,dtype=torch.long)
         tec_loss=F.cross_entropy(logtis_matrix,labels)
         return tec_loss
         
