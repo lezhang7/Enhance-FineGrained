@@ -152,7 +152,7 @@ core.*
 # Allow
 !src/evaluation/misc/results_dbs/*
 
-
+*.out
 /slurm_logs/
 /processed_dataset/
 /src/Outputs/
