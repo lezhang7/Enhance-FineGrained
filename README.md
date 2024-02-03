@@ -12,8 +12,6 @@ TL;DR: We Propose **two losses** to enhance model's **compositional understandin
 
 # Training
 
-The two losses are included in `Enhance-FineGrained/src/open_clip/loss.py` `Clip_DALoss`, the training file is at `Enhance-FineGrained/src/training/train.py`. Here are scripts to reproduce the results.
-
 ### 1. Generating Training dataset
 
 The training data is generated based on COCO 2014, so you can either [download](https://cocodataset.org/#download) by yourself and assign coco `dataset_path` in `dataset.py` or **you can simply run following script to download and generate** dataset

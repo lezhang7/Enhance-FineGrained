@@ -226,7 +226,7 @@ class Clip_DALoss(nn.Module):
 
         Different Losses:
             - hard negative: standard clip contrastive loss, assuming hard-negatives as extra negative for computing logits_per_image, logits_per_text is the same as clip
-            - itc_loss: standard clip contrastive loss + contrastive loss on text embeddings (between ground truth caption embedding and hard-negative caption embedding)
+            - imc_loss: standard clip contrastive loss + contrastive loss on text embeddings (between ground truth caption embedding and hard-negative caption embedding)
             - cmr_loss: standard clip contrastive loss + rank loss between gt pair and hg pair
         """
         device = image_features.device
@@ -258,12 +258,12 @@ class Clip_DALoss(nn.Module):
                 # cross-modal rank loss
                 if self.atr_loss:
                     da_logits_per_image= logit_scale * (da_all_text_features.reshape(gt_len,-1,feature_size)@ all_image_features.unsqueeze(-1)).squeeze() * all_valid_caption_mask
-                    atr_loss,thresholds=self.get_atr_loss(logits_per_image,da_logits_per_image,all_valid_caption_mask,thresholds)
+                    atr_loss,thresholds=self.get_cmr_loss(logits_per_image,da_logits_per_image,all_valid_caption_mask,thresholds)
                 
                 # intra-modal contrastive loss
                 if self.tec_loss:
                     text_embedding_matrix=logit_scale * gt_all_text_features @ da_all_text_features.T  #(all_batch_size,4*all_batch_size)
-                    tec_loss+=self.get_tec_loss(logits_per_image,text_embedding_matrix)
+                    tec_loss+=self.get_imc_loss(logits_per_image,text_embedding_matrix)
 
         else:
         # not updating very long time
@@ -277,10 +277,10 @@ class Clip_DALoss(nn.Module):
             logits_per_text = logit_scale * gt_text_features @ image_features.T
             if self.atr_loss:
                 da_logits_per_image=  logit_scale * (da_text_features.reshape(gt_len,-1,feature_size)@ image_features.unsqueeze(-1)).squeeze() * valid_caption_mask
-                atr_loss,thresholds=self.get_atr_loss(logits_per_image,da_logits_per_image,valid_caption_mask,thresholds)
+                atr_loss,thresholds=self.get_cmr_loss(logits_per_image,da_logits_per_image,valid_caption_mask,thresholds)
             if self.tec_loss:
                 text_embedding_matrix=logit_scale * gt_text_features @ da_text_features.T #(batch_size,4*batch_size)
-                tec_loss=self.get_tec_loss(logits_per_image,text_embedding_matrix)         
+                tec_loss=self.get_imc_loss(logits_per_image,text_embedding_matrix)         
         num_logits = logits_per_image.shape[0]
         if self.prev_num_logits != num_logits or device not in self.labels:
             labels = torch.arange(num_logits, device=device, dtype=torch.long)
@@ -304,7 +304,7 @@ class Clip_DALoss(nn.Module):
         return total_loss,thresholds,atr_loss,tec_loss
    
         
-    def get_atr_loss(self,gt_logits_per_image:torch.Tensor,da_logits_per_image:torch.Tensor,valid_caption_mask,thresholds:torch.Tensor) -> torch.Tensor:
+    def get_cmr_loss(self,gt_logits_per_image:torch.Tensor,da_logits_per_image:torch.Tensor,valid_caption_mask,thresholds:torch.Tensor) -> torch.Tensor:
         # calculating atr loss
         gt_similarity=gt_logits_per_image.diag().reshape(-1,1).expand(da_logits_per_image.shape)
         # gt_similarity=gt_logits_per_image.gather(0,torch.arange(min(gt_logits_per_image.shape),device=gt_logits_per_image.device).reshape(1,-1)).reshape(min(gt_logits_per_image.shape),1).expand(da_logits_per_image.shape)
@@ -323,12 +323,13 @@ class Clip_DALoss(nn.Module):
             thresholds=thresholds.detach()
         return atr_loss.mean(),thresholds
 
-    def get_tec_loss(self,gt_logits_per_image:torch.Tensor,embedding_matrix:torch.Tensor):
+    def get_imc_loss(self,gt_logits_per_image:torch.Tensor,embedding_matrix:torch.Tensor):
         """
         gt_logits_per_image: standard clip similarity matrix, diag is true gt similarity value : shape [batch_size,batch_size]
         embedding_matrix: extra similarity matrix served as denominator in clip loss
         """
         gt_similarity=gt_logits_per_image.diag().reshape(-1,1)
+        # rescale gt_similarity to match the scale of text_contrast embedding matrix
         logtis_matrix=torch.cat([gt_similarity,embedding_matrix],dim=-1)
         labels=torch.zeros(logtis_matrix.shape[0],device=gt_similarity.device,dtype=torch.long)
         tec_loss=F.cross_entropy(logtis_matrix,labels)
