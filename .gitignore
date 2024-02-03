@@ -163,3 +163,11 @@ core.*
 /clip/
 /vision-language-models-are-bows/~/
 /experiments/
+
+# 忽略 /home/mila/l/le.zhang/scratch/github_clone/Enhance-FineGrained/src/Outputs/ 下的所有文件
+/src/Outputs/
+/src/wandb/
+# 忽略文件夹 /home/mila/l/le.zhang/scratch/github_clone/Enhance-FineGrained/data/annotations
+/data/annotations/
+/data/generated_data/
+/data/train2014

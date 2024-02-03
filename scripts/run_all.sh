@@ -3,14 +3,15 @@
 #SBATCH --partition=long                           # Ask for unkillable job
 #SBATCH --cpus-per-task=4                              # Ask for 2 CPUs
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:a100:2
-#SBATCH --ntasks-per-node=2                                # Ask for 1 GPU
-#SBATCH --mem=32G                                        # Ask for 10 GB of RAM
-#SBATCH --time=2:00:00                                   
-
+#SBATCH --gres=gpu:a100l:4
+#SBATCH --ntasks-per-node=4                                # Ask for 1 GPU
+#SBATCH --mem=128G                                        # Ask for 10 GB of RAM
+#SBATCH --time=12:00:00                                   
+#SBATCH --output=/home/mila/l/le.zhang/scratch/slurm_logs/Enhance-FineGrained/job_output-%j.txt
+#SBATCH --error=/home/mila/l/le.zhang/scratch/slurm_logs/Enhance-FineGrained/job_error-%j.txt 
 module load miniconda/3
 conda init
-conda activate flava
+conda activate aro
 
 export MASTER_PORT=$(expr 10000 + $(echo -n $SLURM_JOBID | tail -c 4))
 echo master port is $MASTER_POR
@@ -26,17 +27,15 @@ echo gpu_num is $SLURM_GPUS_ON_NODE
 
 train_data='../data/generated_data/coco_train/'
 upper_bound=10
-atr_weight=0.2
-tec_weight=0.2
 threshold_type=mean # fixed or mean
-fixed_threshold_value=5
+fixed_threshold_value=10
 lr=5e-06
 bs=128
 cd ../src/
 
-for atr_weight in 0.2 0.4 0.6 0.8 1.0
+for atr_weight in 0.2
 do
-    for tec_weight in 0.2 0.4 0.6 0.8 1.0
+    for tec_weight in 0.2
     do
         if [ "$threshold_type" == "fixed" ]; then
             output_name=coco_hn_tec$tec_weight-atr$atr_weight-fixed$fixed_threshold_value-$lr

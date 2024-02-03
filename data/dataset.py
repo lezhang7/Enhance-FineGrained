@@ -1,7 +1,7 @@
 import json
 import os
 import torch 
-from torch.utils.data import Dataset
+from torch.utils.data import Dataset, DataLoader
 from tqdm import tqdm
 from PIL import Image
 from pathlib import Path
@@ -17,12 +17,16 @@ from pycocotools.coco import COCO
 
 COCO_DATASET_ROOT="./"
 train_annotations_root='annotations/captions_train2014.json'
-xvlm_coco_train_annotations_root='/home/mila/l/le.zhang/scratch/X-VLM/data/finetune/coco_train.json'
+xvlm_coco_train_annotations_root='~/scratch/X-VLM/data/finetune/coco_train.json'
 val_annotations_root='annotations/captions_val2014.json'
 train_root="train2014/"
 # test_root="./test2014/"
 val_root="val2014/"
 
+def get_num_workers():
+    recommended_max_workers = 2
+    num_cpus = os.cpu_count()
+    return min(num_cpus, recommended_max_workers) if num_cpus else 0
 
 def read_foils(foils_path):
     if "original-foil-dataset" in foils_path:
@@ -106,8 +110,10 @@ class MaskedCaptionsDataset(Dataset):
     
 class TextAugment(object):
     def __init__(self):
-        self.device=torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        self.unmasker = pipeline('fill-mask', model='distilroberta-base',device=self.device,top_k=5)
+        self.device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.unmasker = pipeline('fill-mask', model='distilroberta-base',device=0,top_k=5)
+        # self.tokenizer = AutoTokenizer.from_pretrained('distilroberta-base')
+        # self.model = AutoModelForMaskedLM.from_pretrained('distilroberta-base').to(self.device)
         self.nlp = spacy.load("en_core_web_sm",exclude=['ner','parser'])
     def mask_captions(self,data):
         doc,data_item=data[0],data[1]
@@ -149,7 +155,7 @@ class TextAugment(object):
         # the filename should mention the extension 'npy'
         tempNumpyArray=np.load(filename,allow_pickle=True)
         return tempNumpyArray.tolist()
-    def __call__(self,dataset,save_name:str=None):
+    def generate(self,dataset,save_name:str=None,batch_size=512):
         print(f'Beging POS and MASK, total data length {len(dataset)}')
         s_time=time.time()
         docs=list(self.nlp.pipe([data_item['caption'] for data_item in dataset],n_process=8))
@@ -164,12 +170,13 @@ class TextAugment(object):
                 if isinstance(value,str) and '<mask>' in value:
                     masked_captions.append(value)
         masked_captions_dataset=MaskedCaptionsDataset(masked_captions)
-        maksed_results=[]
-        print('utilizing pretrained model to fill the mask')
+        data_loader = DataLoader(masked_captions_dataset, batch_size=batch_size, shuffle=False, num_workers=get_num_workers(), pin_memory=True, drop_last=False)
+        maksed_results = []
+        print('Utilizing pretrained model to fill the mask')
         with torch.no_grad():
-            for out in tqdm(self.unmasker(masked_captions_dataset,batch_size=512),total=len(masked_captions_dataset)):
-                # maksed_results.append(unmasker(masked_captions,batch_size=2048))
-                maksed_results.append(out)
+            for batch in tqdm(data_loader, total=len(data_loader)):
+                outputs = self.unmasker(batch)
+                maksed_results.extend(outputs)
 
         torch.cuda.empty_cache()
         unmaked_captions=list(map(self.select_unmasked_captions,maksed_results))
@@ -191,32 +198,31 @@ class TextAugment(object):
             with open(save_name,"wb") as f:
                 np.save(f,dataset)
         return dataset
-def augmentation(args):
+
+def main(args):
 
     print('loading dataset from local folder')
     if args.data=='coco_train':
         dataset=CocoDataset(os.path.join(COCO_DATASET_ROOT,train_root),train_annotations_root,None)
         samples=list(dataset.dataset.anns.values())
-    # elif args.data=='coco_val':
-    #     dataset=CocoDataset(os.path.join(COCO_DATASET_ROOT,val_root),val_annotations_root,None)
-    #     samples=list(dataset.dataset.anns.values())
     elif args.data=='coco_xvlm':
         samples=json.load(open(xvlm_coco_train_annotations_root, 'r'))
-    DA=TextAugment()
+    hard_negative_generator=TextAugment()
     os.makedirs(f"generated_data/{args.data}",exist_ok=True)
     for split_idx,split_star_index in enumerate(range(0,len(samples),args.split_num)):
         data=samples[split_star_index:split_star_index+args.split_num]
         save_path=os.path.join(f'generated_data/{args.data}/processed_dataset{split_idx}.npy')
-        DA(data,save_path)
+        hard_negative_generator.generate(data,save_path,args.batch_size)
 def get_arg_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--split_num',type=int,default=50000)
+    parser.add_argument('-bs','--batch_size',type=int,default=512)
     parser.add_argument('--data',type=str,required=True,choices=['coco_train','coco_val','coco_xvlm'])
     args = parser.parse_args()
     return args
 if __name__=="__main__":
     print('perfrom data augmentation',flush=True)
     args=get_arg_parser() 
-    augmentation(args)
+    main(args)
     
         
