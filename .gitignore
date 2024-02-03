@@ -152,7 +152,7 @@ core.*
 # Allow
 !src/evaluation/misc/results_dbs/*
 
-*.out
+
 /slurm_logs/
 /processed_dataset/
 /src/Outputs/
@@ -171,3 +171,6 @@ core.*
 /data/annotations/
 /data/generated_data/
 /data/train2014
+
+# 忽略所有.out文件
+*.out
