@@ -14,7 +14,6 @@ The checkpoints could be downloaded directly using gdown with following script:
 
 ``````bash
 pip install --upgrade --no-cache-dir gdown # must update gdown to avoid bugs, thanks to https://github.com/wkentaro/gdown/issues/146
-bash download.sh   # Download GPT generated documents  
 gdown 1DWPw3CtGh5cHz9bW_-iXRSG7BBUVl13K #download checkpoint for CE-CLIP
 ``````
 
