@@ -1,29 +1,18 @@
 #!/bin/bash
-#SBATCH --job-name=noit
+#SBATCH --job-name=ones
 #SBATCH --partition=long                           # Ask for unkillable job
 #SBATCH --cpus-per-task=4                              # Ask for 2 CPUs
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:a100l:2
+#SBATCH --gres=gpu:a100l:4
 #SBATCH --ntasks-per-node=4                                # Ask for 1 GPU
 #SBATCH --mem=128G                                        # Ask for 10 GB of RAM
-#SBATCH --time=80:00:00   
-#SBATCH --reservation=ubuntu1804                                 
+#SBATCH --time=120:00:00                                   
 #SBATCH --output=/home/mila/l/le.zhang/scratch/slurm_logs/Enhance-FineGrained/job_output-%j.txt
 #SBATCH --error=/home/mila/l/le.zhang/scratch/slurm_logs/Enhance-FineGrained/job_error-%j.txt 
 module load miniconda/3
 conda init
 conda activate aro
 
-export MASTER_PORT=$(expr 10000 + $(echo -n $SLURM_JOBID | tail -c 4))
-echo master port is $MASTER_POR
-export WORLD_SIZE=$SLURM_NTASKS_PER_NODE
-echo world size is $WORLD_SIZE
-master_addr=$(scontrol show hostnames "$SLURM_JOB_NODELIST" | head -n 1)
-export MASTER_ADDR=$master_addr
-echo master addr is $MASTER_ADDR
-export OMP_NUM_THREADS=12
-
-echo gpu_num is $SLURM_GPUS_ON_NODE
 
 
 train_data='../data/generated_data/coco_train/'
@@ -41,7 +30,7 @@ do
         if [ "$threshold_type" == "fixed" ]; then
             output_name=coco_hn_tec$tec_weight-atr$atr_weight-fixed$fixed_threshold_value-$lr
         else
-            output_name=coco_hn_tec$tec_weight-atr$atr_weight-mean-ub$upper_bound-$lr-noit
+            output_name=coco_hn_tec$tec_weight-atr$atr_weight-mean-ub$upper_bound-$lr
         fi
         output_file=./Outputs/$output_name
 
@@ -50,8 +39,7 @@ do
         else
             echo "running $output_name"
             echo "$output_name" >> ../experiments/run_all_hypertuning_names_coco
-            torchrun --master_port $MASTER_PORT  --nproc_per_node=$SLURM_GPUS_ON_NODE \
-            main.py \
+            python main.py \
             --wandb-project-name open_clip \
             --train-data $train_data \
             --seed 42 \

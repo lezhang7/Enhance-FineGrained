@@ -329,9 +329,9 @@ class Clip_DALoss(nn.Module):
         embedding_matrix: extra similarity matrix served as denominator in clip loss
         """
         gt_similarity=gt_logits_per_image.diag().reshape(-1,1)
-        # rescale gt_similarity to match the scale of text_contrast embedding matrix
+        # gt_similarity = torch.zeros_like(gt_similarity).to(gt_similarity.device)
         logtis_matrix=torch.cat([gt_similarity,embedding_matrix],dim=-1)
-        labels=torch.zeros(logtis_matrix.shape[0],device=gt_similarity.device,dtype=torch.long)
+        labels=torch.ones(logtis_matrix.shape[0],device=gt_similarity.device,dtype=torch.long)
         tec_loss=F.cross_entropy(logtis_matrix,labels)
         return tec_loss
         
