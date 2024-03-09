@@ -1,14 +1,22 @@
 # [Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Compositional Understanding](https://arxiv.org/abs/2306.08832)
 
-TL;DR: We Propose **two losses** to enhance model's **compositional understanding** ability for any contrastive vision-language models loss like CLIP. The two losses are applied on our **generated hard negative** examples.
+:tada: <span style="color: red;">**The paper was accepted to CVPR 2024**</span>:
 
-![motivation](./assets/motivation.png)
+TL;DR: We Propose **two losses** on our **generated hard negative** examples to enhance model's **compositional understanding** ability for CLIP.
+
+![motivation](/assets/motivation.png)
 
 **This repo forks from wonderful [OpenCLIP](https://github.com/mlfoundations/open_clip)**, for model and training details, please refer to original repo.
 
 # :ballot_box_with_check: Checkpoints
 
-**We release both clip-enhanced and xvlm-enhanced checkpoints at [here](https://drive.google.com/drive/folders/1rpt_YpqSatuWTUDT9uMXkU1RUSBfWec1?usp=sharing)**
+The checkpoints could be downloaded directly using gdown with following script:
+
+``````bash
+pip install --upgrade --no-cache-dir gdown # must update gdown to avoid bugs, thanks to https://github.com/wkentaro/gdown/issues/146
+bash download.sh   # Download GPT generated documents  
+gdown 1DWPw3CtGh5cHz9bW_-iXRSG7BBUVl13K #download checkpoint for CE-CLIP
+``````
 
 # Training
 
@@ -32,15 +40,13 @@ bash run_all.sh
 
 The result checkpoint will be at `Enhance-FineGrained/src/Outputs`
 
-
-
 # Evaluation
 
 We evaluate our method on four downstream task [ARO](https://github.com/mertyg/vision-language-models-are-bows), [VALSE](https://github.com/Heidelberg-NLP/VALSE) and [VL-CheckList](https://github.com/om-ai-lab/VL-CheckList), and very recent [SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) and we also provide evaluation code. However, one need go to official github page to download dataset to evaluate on them.
 
 ### ARO&VALSE
 
-![ARO](./assets/aro.png)
+![ARO](/assets/aro.png)
 
 Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-models-are-bows`, to reproduce results, you need 
 
@@ -50,18 +56,23 @@ Evaluation code for ARO is included in `Enhance-FineGrained/vision-language-mode
 
    ---
 
-1. Evaluation code for VALSE is included in `Enhance-FineGrained/VALSE`, to reproduce results on valse, please download dataset [here](https://github.com/Heidelberg-NLP/VALSE) first. **Then replace dataset** path in `Enhance-FineGrained/VALSE/clip_valse_eval.py` `Enhance-FineGrained/VALSE/xvlm_valse_eval.py`
-2. replace `$checkpoint` in `Enhance-FineGrained/VALSE/scripts` then run the scripts, evaluation results will be included in `/home/mila/l/le.zhang/scratch/Enhance-FineGrained/VALSE/output`
+3. Evaluation code for VALSE is included in `Enhance-FineGrained/VALSE`, to reproduce results on valse, please download dataset [here](https://github.com/Heidelberg-NLP/VALSE) first. **Then replace dataset** path in `Enhance-FineGrained/VALSE/clip_valse_eval.py` `Enhance-FineGrained/VALSE/xvlm_valse_eval.py`
 
-### VL-CheckList
-![vlchecklist](./assets/vlchecklist.png)
+4. replace `$checkpoint` in `Enhance-FineGrained/VALSE/scripts` then run the scripts, evaluation results will be included in `/home/mila/l/le.zhang/scratch/Enhance-FineGrained/VALSE/output`
+
+### VL-CheckList [Not Suggested]
+
+![vlchecklist](/assets/vlchecklist.png)
+
+:exclamation: **Note: The original dataset is not complete, we encourage skip this dataset** 
 
 Please refer to [official github](https://github.com/om-ai-lab/VL-CheckList) repo to download dataset and perform evaluation. *Note that Downloading the dataset can be quite cumbersome*
 
 we provide script at [here](https://github.com/rabiulcste/vl_checklist/tree/ca0c68d1f457f670139feb75a6b884adff88aeee)
 
 ### :star2: SugarCrepe
-![sugarcrepe](./assets/sugarcrepe.png)
+
+![sugarcrepe](/assets/sugarcrepe.png)
 
 [SugarCrepe](https://github.com/RAIVNLab/sugar-crepe) is a benchmark for faithful vision-language compositionality evaluation. This dataset **fix a several biases** in all above benchmarks *rendering them hackable that blind models with no access to the image outperform state-of-the-art vision-language models*. 
 
@@ -78,7 +89,7 @@ python main_eval.py --model ViT-B-32 --pretrained Enhance-FineGrained/clip/epoch
 
 Our method entails curriculum learning, which is validated by the growth of adaptive threshold
 
-![abaltion](./assets/abaltion.png)
+![abaltion](/assets/abaltion.png)
 
 # :paperclip: Citation
 
