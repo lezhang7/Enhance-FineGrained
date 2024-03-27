@@ -66,10 +66,10 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
             rank=args.rank,
             world_size=args.world_size,
             use_horovod=args.horovod,
-            atr_loss=args.atr_loss,
-            tec_loss=args.tec_loss,
-            tec_loss_weight=args.tec_loss_weight,
-            atr_loss_weight=args.atr_loss_weight,
+            cmr_loss=args.cmr_loss,
+            imc_loss=args.imc_loss,
+            imc_loss_weight=args.imc_loss_weight,
+            cmr_loss_weight=args.cmr_loss_weight,
             threshold_type=args.threshold_type,
             hardnegative=args.hardnegative,
            
@@ -98,18 +98,18 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
     data_time_m = AverageMeter()
     end = time.time()
     
-    if args.atr_loss and args.threshold_type=="fixed":
+    if args.cmr_loss and args.threshold_type=="fixed":
         # init thresholds for fixed threshold
         thresholds=args.fixed_threshold_value
-    elif args.atr_loss:
-        # init thresholds for mean atr loss
+    elif args.cmr_loss:
+        # init thresholds for mean cmr loss
         thresholds=0.0
     else:
-        # without atr loss
+        # without cmr loss
         thresholds=None 
 
-    atr_loss=None
-    tec_loss=None
+    cmr_loss=None
+    imc_loss=None
     for i, batch in enumerate(dataloader):
         i_accum = i // args.accum_freq
         step = num_batches_per_epoch * epoch + i_accum
@@ -133,7 +133,7 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
             with autocast():
                 image_features, text_features, logit_scale = model(images, texts)
                 if args.extra_da:
-                    total_loss, thresholds ,atr_loss,tec_loss = loss(image_features, text_features,valid_caption_mask, logit_scale,thresholds)
+                    total_loss, thresholds ,cmr_loss,imc_loss = loss(image_features, text_features,valid_caption_mask, logit_scale,thresholds)
                     if args.threshold_type!="fixed" and thresholds is not None and args.upper_bound is not None:
                         thresholds=torch.clamp(thresholds,0,args.upper_bound)
                 else:
@@ -216,19 +216,20 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
                 f"Data (t): {data_time_m.avg:.3f} "
                 f"LR: {optimizer.param_groups[0]['lr']:5f} "
                 f"Logit Scale: {logit_scale_scalar:.3f} "
-                f"ATR_Loss: {atr_loss if atr_loss is not None else None} "
-                f"TEC_Loss: {tec_loss if tec_loss is not None else None} "
+                f"CMR_Loss: {cmr_loss if cmr_loss is not None else None} "
+                f"IMC_Loss: {imc_loss if imc_loss is not None else None} "
             )
               
-            if args.atr_loss and args.threshold_type=="fixed":
+            if args.cmr_loss and args.threshold_type=="fixed":
                 # init thresholds for fixed threshold
                 logging.info(f"Thresholds: {thresholds}")
-            elif args.atr_loss:
-                # init thresholds for mean atr loss
-                logging.info(f"Threshold_1: {thresholds.mean(0)[0].item() }"
-                             f"Threshold_2: {thresholds.mean(0)[1].item() }"
-                             f"Threshold_3: {thresholds.mean(0)[2].item() }"
-                             f"Threshold_4: {thresholds.mean(0)[3].item() }")
+            elif args.cmr_loss:
+                # init thresholds for mean cmr loss
+                logging.info(f"Threshold_1: {thresholds.mean(0)[0].item():.3f} "
+                            f"Threshold_2: {thresholds.mean(0)[1].item():.3f} "
+                            f"Threshold_3: {thresholds.mean(0)[2].item():.3f} "
+                            f"Threshold_4: {thresholds.mean(0)[3].item():.3f}")
+
             # Save train loss / etc. Using non avg meter values as loggers have their own smoothing
             
             log_data = {
@@ -238,15 +239,15 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
                 "samples_per_second": args.accum_freq * args.batch_size * args.world_size / batch_time_m.val,
                 "scale": logit_scale_scalar,
                 "lr": optimizer.param_groups[0]["lr"],
-                "ATR_Loss": atr_loss if atr_loss is not None else None,
-                "TEC_Loss": tec_loss if tec_loss is not None else None
+                "CMR_Loss": cmr_loss if cmr_loss is not None else None,
+                "IMC_Loss": imc_loss if imc_loss is not None else None
             }
              
-            if args.atr_loss and args.threshold_type=="fixed":
+            if args.cmr_loss and args.threshold_type=="fixed":
                 # init thresholds for fixed threshold
                 log_data['threshold']=thresholds
-            elif args.atr_loss:
-                # init thresholds for mean atr loss
+            elif args.cmr_loss:
+                # init thresholds for mean cmr loss
                 log_data["threshold_1"]= thresholds.mean(0)[0].item() 
                 log_data["threshold_2"]= thresholds.mean(0)[1].item() 
                 log_data["threshold_3"]= thresholds.mean(0)[2].item()

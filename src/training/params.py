@@ -78,26 +78,26 @@ def parse_args(args):
         help="clamp upper bound for threshold"
     )
     parser.add_argument(
-        "-tec",
-        "--tec-loss",
+        "-imc",
+        "--imc-loss",
         default=False,
         action="store_true",
-        help="whether to use tec loss"
+        help="whether to use imc loss"
     )
     parser.add_argument(
-        "--tec-loss-weight",
+        "--imc-loss-weight",
         type=float,
         default=0.2,
     )
     parser.add_argument(
-        "-atr",
-        "--atr-loss",
+        "-cmr",
+        "--cmr-loss",
         default=False,
         action="store_true",
-        help="Whether to use atr loss"
+        help="Whether to use cmr loss"
     )
     parser.add_argument(
-        "--atr-loss-weight",
+        "--cmr-loss-weight",
         type=float,
         default=0.2,
     )

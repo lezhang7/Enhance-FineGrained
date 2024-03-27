@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=ones
+#SBATCH --job-name=test_single
 #SBATCH --partition=long                           # Ask for unkillable job
 #SBATCH --cpus-per-task=4                              # Ask for 2 CPUs
 #SBATCH --nodes=1
@@ -9,6 +9,9 @@
 #SBATCH --time=120:00:00                                   
 #SBATCH --output=/home/mila/l/le.zhang/scratch/slurm_logs/Enhance-FineGrained/job_output-%j.txt
 #SBATCH --error=/home/mila/l/le.zhang/scratch/slurm_logs/Enhance-FineGrained/job_error-%j.txt 
+
+
+
 module load miniconda/3
 conda init
 conda activate aro
@@ -21,7 +24,7 @@ threshold_type=mean # fixed or mean
 fixed_threshold_value=10
 lr=5e-06
 bs=256
-cd ../src/
+cd ./src
 
 for atr_weight in 0.2
 do
@@ -30,7 +33,7 @@ do
         if [ "$threshold_type" == "fixed" ]; then
             output_name=coco_hn_tec$tec_weight-atr$atr_weight-fixed$fixed_threshold_value-$lr
         else
-            output_name=coco_hn_tec$tec_weight-atr$atr_weight-mean-ub$upper_bound-$lr
+            output_name=coco_hn_tec$tec_weight-atr$atr_weight-mean-ub$upper_bound-$lr-test_single
         fi
         output_file=./Outputs/$output_name
 
@@ -38,7 +41,6 @@ do
             echo "$output_name already exists"
         else
             echo "running $output_name"
-            echo "$output_name" >> ../experiments/run_all_hypertuning_names_coco
             python main.py \
             --wandb-project-name open_clip \
             --train-data $train_data \
@@ -56,6 +58,7 @@ do
             --model ViT-B-32 \
             --logs Outputs \
             --beta1 0.9 \
+            --precision amp \
             --beta2 0.98 \
             --eps 1e-06 \
             --log-every-n-steps 10 \
@@ -75,7 +78,6 @@ do
                 # Delete the output folder
                 rm -rf $output_file
                 # Remove the output name from the file
-                sed -i "/$output_name/d" ../experiments/run_all_hypertuning_names_coco
             fi
         fi
     done

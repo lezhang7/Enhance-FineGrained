@@ -33,7 +33,7 @@ except ImportError:
     hvd = None
 
 
-COCO_DATASET_ROOT="/home/mila/l/le.zhang/scratch/datasets/coco/2014"
+COCO_DATASET_ROOT=os.getenv("IMG_DATA_DIR","~/scratch/datasets/coco/2014")
 
 class WinogroundDataCollator_batched:
     def __init__(self):
