@@ -27,7 +27,7 @@ export OMP_NUM_THREADS=12
 echo gpu_num is $SLURM_GPUS_ON_NODE
 
 # set up data
-IMG_DATA_DIR=~/dataset/coco/2014/train2014.zip # set path to coco 2014 folder
+IMG_DATA_DIR=../data/train2014.zip # set path to coco 2014 folder
 mkdir $SLURM_TMPDIR/data
 unzip -q $IMG_DATA_DIR -d $SLURM_TMPDIR/data
 echo "unzip done"
