@@ -175,3 +175,4 @@ core.*
 # 忽略所有.out文件
 *.out
 /scripts/run_single.sh
+/scripts/run_multi*

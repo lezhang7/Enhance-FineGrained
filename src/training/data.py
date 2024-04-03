@@ -661,6 +661,77 @@ def get_synthetic_dataset(args, preprocess_fn, is_train, epoch=0, tokenizer=None
     dataloader.num_batches = len(dataloader)
 
     return DataInfo(dataloader, sampler)
+
+class SDSynthDataset(Dataset):
+    def __init__(self, args, meta_info, transforms=None, tokenizer=None, train_num_samples=None):
+        self.data_args = args
+        self.data = self.transform_meta_to_json(meta_info)
+        self.transforms = transforms
+        self.tokenizer = tokenizer
+
+    def transform_meta_to_json(self,meta):
+        random.shuffle(meta)
+        meta_data_list=[]
+        for i in range(len(meta)):
+            meta_info = meta[i]
+            original_caption = list(meta_info.keys())[-1]
+            meta_data_list.append({'caption': meta_info['caption'], 'image_path': meta_info['image_path'], 'original': True})
+            current_index = len(meta_data_list) - 1
+            
+            if self.data_args.sole_hardnegative:
+                # only add one random hard negative
+                random_index = random.randint(0, len(meta_info['negatives']) - 1)
+            
+                syn = meta_info['negatives'][random_index]
+                meta_data_list.append({'caption': syn['edited_caption'], 'image_path': syn['edited_image_path'], 'original': False, 'original_index': current_index})
+            else:
+                for syn in meta_info['negatives']:
+                        if getattr(self.data_args,'categories',False):
+                            assert type(self.data_args.categories) == list, 'categories should be a list'
+                            if syn['category'] in self.data_args.categories:
+                                meta_data_list.append({'caption': syn['edited_caption'], 'image_path': syn['edited_image_path'], 'original': False, 'original_index': current_index})
+
+                        else:   
+                            meta_data_list.append({'caption': syn['edited_caption'], 'image_path': syn['edited_image_path'], 'original': False, 'original_index': current_index})
+        return meta_data_list
+        
+    def __len__(self):
+        return len(self.data)
+
+    def __getitem__(self, idx):
+        sample = self.data[idx]
+        image = Image.open(sample['image_path']).convert('RGB')
+        image = self.transforms(image)
+        input_tokens = self.tokenizer(sample['caption'])[0]
+        return image, input_tokens
+
+def get_sdgen_dataset(args, preprocess_fn, is_train, epoch, tokenizer=None):
+    input_filename = args.train_data if is_train else args.val_data
+    assert input_filename
+    train_meta = json.load(open(input_filename))
+    dataset = SDSynthDataset(
+        args,
+        train_meta,
+        preprocess_fn,
+        tokenizer=tokenizer
+    )
+    num_samples = len(dataset)
+    sampler = DistributedSampler(dataset) if args.distributed and is_train else None
+    shuffle = is_train and sampler is None
+    dataloader = DataLoader(
+        dataset,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=args.workers,
+        pin_memory=True,
+        sampler=sampler,
+        drop_last=is_train,
+    )
+    dataloader.num_samples = num_samples
+    dataloader.num_batches = len(dataloader)
+
+    return DataInfo(dataloader, sampler)
+
 def get_huggingface_dataset(args, preprocess_fn, is_train, epoch=0, tokenizer=None):
     if args.val_data=='winoground':
         dataset=Winoground(transforms=preprocess_fn, tokenizer=tokenizer)
@@ -691,6 +762,8 @@ def get_dataset_fn(data_path, dataset_type):
         return get_huggingface_dataset
     elif dataset_type == "webdataset":
         return get_wds_dataset
+    elif dataset_type == "sdgen":
+        return get_sdgen_dataset
     elif dataset_type == "csv":
         return get_csv_dataset
     elif dataset_type == "synthetic":

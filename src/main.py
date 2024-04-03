@@ -6,7 +6,8 @@ import subprocess
 import sys
 import random
 from datetime import datetime
-
+import sys
+sys.path.append('/home/mila/l/le.zhang/scratch/github_clone/Enhance-FineGrained')
 import numpy as np
 import torch
 from torch import optim

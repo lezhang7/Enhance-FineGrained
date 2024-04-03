@@ -50,8 +50,19 @@ def parse_args(args):
     )
     parser.add_argument(
         "--dataset-type",
-        choices=["webdataset", "csv", "synthetic", "auto","npy","huggingface","json"],
+        choices=["webdataset", "csv", "synthetic", "auto","npy","huggingface","json","sdgen"],
         help="Which type of dataset to process."
+    )
+    parser.add_argument(
+        "--categories",
+        nargs='+',
+        default=None,
+        help="List of categories to use for training."
+    )
+    parser.add_argument(
+        "--sole-hardnegative",
+        action="store_true",
+        help="Whether to use only one random hard negative"
     )
     parser.add_argument(
         "--hardnegative",
@@ -87,7 +98,7 @@ def parse_args(args):
     parser.add_argument(
         "--imc-loss-weight",
         type=float,
-        default=0.2,
+        default=None,
     )
     parser.add_argument(
         "-cmr",
@@ -99,7 +110,7 @@ def parse_args(args):
     parser.add_argument(
         "--cmr-loss-weight",
         type=float,
-        default=0.2,
+        default=None,
     )
     parser.add_argument(
         "--dataset-resampled",
@@ -445,7 +456,7 @@ def parse_args(args):
     for name, val in default_params.items():
         if getattr(args, name) is None:
             setattr(args, name, val)
-    if args.hardnegative or args.discriminative_loss or args.rank_loss:
+    if args.hardnegative or args.imc_loss or args.cmr_loss:
         print("using extra data-augmented data to train the model")
         args.extra_da=True
     else:
