@@ -12,6 +12,7 @@ import torch
 import torch.nn.functional as F
 from torch import nn
 from torch.utils.checkpoint import checkpoint
+from transformers import SiglipModel
 
 from .hf_model import HFTextEncoder
 from .modified_resnet import ModifiedResNet
@@ -156,6 +157,7 @@ def _build_text_tower(
     return text
 
 
+
 class CLIP(nn.Module):
     def __init__(
             self,
@@ -210,7 +212,40 @@ class CLIP(nn.Module):
         image_features = self.encode_image(image, normalize=True)
         text_features = self.encode_text(text, normalize=True)
         return image_features, text_features, self.logit_scale.exp()
-
+    
+class Siglip(SiglipModel):
+    def forward(
+        self,
+        pixel_values: Optional[torch.FloatTensor] = None,
+        input_ids: Optional[torch.LongTensor] = None,
+        attention_mask: Optional[torch.Tensor] = None,
+        position_ids: Optional[torch.LongTensor] = None,
+        return_loss: Optional[bool] = None,
+        output_attentions: Optional[bool] = None,
+        output_hidden_states: Optional[bool] = None,
+        return_dict: Optional[bool] = None,
+    ):
+        vision_outputs = self.vision_model(
+            pixel_values=pixel_values,
+            output_attentions=output_attentions,
+            output_hidden_states=output_hidden_states,
+            return_dict=return_dict,
+        )
+        text_outputs = self.text_model(
+            input_ids=input_ids,
+            attention_mask=attention_mask,
+            position_ids=position_ids,
+            output_attentions=output_attentions,
+            output_hidden_states=output_hidden_states,
+            return_dict=return_dict,
+        )
+        image_embeds = vision_outputs[1]
+        text_embeds = text_outputs[1]
+        # normalized features
+        image_embeds = image_embeds / image_embeds.norm(p=2, dim=-1, keepdim=True)
+        text_embeds = text_embeds / text_embeds.norm(p=2, dim=-1, keepdim=True)
+        return image_embeds, text_embeds, (self.logit_scale.exp(), self.logit_bias)
+    
 class CustomTextCLIP(nn.Module):
     def __init__(
             self,

@@ -8,7 +8,10 @@ import sys
 import time
 from dataclasses import dataclass
 from multiprocessing import Value
-from transformers import CLIPProcessor
+from transformers import CLIPProcessor, SiglipProcessor
+import torchvision
+from torchvision.transforms import Normalize, Compose, RandomResizedCrop, InterpolationMode, ToTensor, Resize, \
+    CenterCrop
 
 import numpy as np
 import pandas as pd
@@ -32,6 +35,15 @@ try:
 except ImportError:
     hvd = None
 
+class SharedEpoch:
+    def __init__(self, epoch: int = 0):
+        self.shared_epoch = Value('i', epoch)
+
+    def set_value(self, epoch):
+        self.shared_epoch.value = epoch
+
+    def get_value(self):
+        return self.shared_epoch.value
 
 
 @dataclass
@@ -532,14 +544,36 @@ def get_synthetic_dataset(args, preprocess_fn, is_train, epoch=0, tokenizer=None
     return DataInfo(dataloader, sampler)
 
 class SDSynthDataset(Dataset):
-    def __init__(self, args, meta_info, transforms=None, tokenizer=None, train_num_samples=None):
+    def __init__(self, args, meta_info, transforms=None, tokenizer=None, train_num_samples=None, is_train=True):
         self.data_args = args
-        self.data = self.transform_meta_to_json(meta_info)
+        self.is_train = is_train
+        self.is_siglip = True if isinstance(transforms, SiglipProcessor) else False
+        if self.is_siglip:
+            self.img_size = tuple(transforms.image_processor.size.values())
+            self.siglip_train_transforms = torchvision.transforms.Compose([
+                RandomResizedCrop(
+                    self.img_size,
+                    scale=(0.9, 1.0),
+                    ratio=(0.75, 1.3333),
+                    interpolation=InterpolationMode.BICUBIC
+                ),
+            ])
+            self.siglip_val_transforms = torchvision.transforms.Compose([
+                Resize(
+                    self.img_size,
+                    interpolation=InterpolationMode.BICUBIC),
+                    CenterCrop(self.img_size,),
+            ])
         self.transforms = transforms
         self.tokenizer = tokenizer
+        self.train_num_samples = train_num_samples
+        self.data = self.transform_meta_to_json(meta_info)
 
     def transform_meta_to_json(self,meta):
-        random.shuffle(meta)
+        if self.is_train:
+            random.shuffle(meta)
+        if self.train_num_samples:
+            meta = meta[:self.train_num_samples]
         meta_data_list=[]
         for i in range(len(meta)):
             meta_info = meta[i]
@@ -570,66 +604,52 @@ class SDSynthDataset(Dataset):
     def __getitem__(self, idx):
         sample = self.data[idx]
         image = Image.open(sample['image_path']).convert('RGB')
-        image = self.transforms(image)
-        input_tokens = self.tokenizer(sample['caption'])[0]
+        if self.is_siglip:
+            if self.is_train:
+                image = self.siglip_train_transforms(image)
+            else:
+                image = self.siglip_val_transforms(image)
+            inputs = self.transforms(text=sample['caption'], images=image, padding="max_length", return_tensors="pt")
+            image = inputs.pixel_values.squeeze(0)
+            input_tokens = inputs.input_ids.squeeze(0)
+        else:
+            image = self.transforms(image)
+            input_tokens = self.tokenizer(sample['caption'])[0]
         return image, input_tokens
 
-def get_sdgen_dataset(args, preprocess_fn, is_train, epoch, tokenizer=None):
+def get_sdgen_dataset(args, preprocess_fn, is_train, epoch=None, tokenizer=None):
     input_filename = args.train_data if is_train else args.val_data
-    assert input_filename
-    train_meta = json.load(open(input_filename))
+    num_samples = args.train_num_samples if is_train else args.val_num_samples
+    assert input_filename, 'Must specify input filename for sdgen dataset'
+    meta_info = json.load(open(input_filename))
     dataset = SDSynthDataset(
         args,
-        train_meta,
+        meta_info,
         preprocess_fn,
-        tokenizer=tokenizer
+        tokenizer=tokenizer,
+        train_num_samples=num_samples,
+        is_train=is_train
     )
-    num_samples = len(dataset)
     sampler = DistributedSampler(dataset) if args.distributed and is_train else None
-    shuffle = is_train and sampler is None
     dataloader = DataLoader(
         dataset,
-        batch_size=args.batch_size,
+        batch_size=args.batch_size if is_train else args.batch_size*4,
         shuffle=False,
         num_workers=args.workers,
         pin_memory=True,
         sampler=sampler,
         drop_last=is_train,
     )
-    dataloader.num_samples = num_samples
+    dataloader.num_samples = len(dataset)
     dataloader.num_batches = len(dataloader)
 
     return DataInfo(dataloader, sampler)
 
-def get_huggingface_dataset(args, preprocess_fn, is_train, epoch=0, tokenizer=None):
-    if args.val_data=='winoground':
-        dataset=Winoground(transforms=preprocess_fn, tokenizer=tokenizer)
-        collate=Winoground_Collate()
-    else:
-        raise ValueError("must specify dataset name for huggingface dataset type")
-    num_samples = len(dataset)
-    sampler = DistributedSampler(dataset) if args.distributed and is_train else None
-    shuffle = is_train and sampler is None
 
-    dataloader = DataLoader(
-        dataset,
-        batch_size=args.batch_size,
-        shuffle=shuffle,
-        pin_memory=True,
-        sampler=sampler,
-        drop_last=is_train,
-        collate_fn=collate
-    )
-    dataloader.num_samples = num_samples
-    dataloader.num_batches = len(dataloader)
-
-    return DataInfo(dataloader, sampler)
 
 
 def get_dataset_fn(data_path, dataset_type):
-    if dataset_type=='huggingface' or data_path=="winoground":
-        return get_huggingface_dataset
-    elif dataset_type == "webdataset":
+    if dataset_type == "webdataset":
         return get_wds_dataset
     elif dataset_type == "sdgen":
         return get_sdgen_dataset
@@ -637,8 +657,6 @@ def get_dataset_fn(data_path, dataset_type):
         return get_csv_dataset
     elif dataset_type == "synthetic":
         return get_synthetic_dataset
-    elif dataset_type == "npy":
-        return get_npy_dataset
     elif dataset_type=="json": 
         return get_json_dataset
     elif dataset_type == "auto":
@@ -664,6 +682,8 @@ def get_data(args, preprocess_fns, epoch=0, tokenizer=None):
             args, preprocess_train, is_train=True, epoch=epoch, tokenizer=tokenizer)
 
     if args.val_data:
+        if preprocess_val is None:
+            preprocess_val = preprocess_train
         data["val"] = get_dataset_fn(args.val_data, args.dataset_type)(
             args, preprocess_val, is_train=False, tokenizer=tokenizer)
 

@@ -13,6 +13,7 @@ try:
 except ImportError:
     wandb = None
 
+from tqdm import tqdm
 from open_clip import Clip_DALoss, get_cast_dtype,ClipLoss
 from .distributed import is_master
 from .zero_shot import zero_shot_eval
@@ -59,6 +60,7 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
 
     model.train()
     if args.extra_da:
+        # custom loss function 
         loss = Clip_DALoss(
             local_loss=args.local_loss,
             gather_with_grad=args.gather_with_grad,
@@ -80,10 +82,9 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
             cache_labels=True,
             rank=args.rank,
             world_size=args.world_size,
-            use_horovod=args.horovod
+            use_horovod=args.horovod,
+            is_siglip = 'siglip' in args.model,
             )
-
-
 
     data['train'].set_epoch(epoch)  # set epoch in process safe manner via sampler or shared_epoch
     dataloader = data['train'].dataloader
@@ -98,18 +99,17 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
     data_time_m = AverageMeter()
     end = time.time()
     
-    if args.cmr_loss and args.threshold_type=="fixed":
-        # init thresholds for fixed threshold
-        thresholds=args.fixed_threshold_value
-    elif args.cmr_loss:
-        # init thresholds for mean cmr loss
-        thresholds=0.0
+    # Optimize by directly setting thresholds based on conditions
+    if args.cmr_loss:
+        # Use a ternary conditional operator to set thresholds based on the type of threshold
+        thresholds = args.fixed_threshold_value if args.threshold_type == "fixed" else 0.0
     else:
-        # without cmr loss
-        thresholds=None 
+        # Without cmr loss
+        thresholds = None
 
     cmr_loss=None
     imc_loss=None
+
     for i, batch in enumerate(dataloader):
         i_accum = i // args.accum_freq
         step = num_batches_per_epoch * epoch + i_accum
@@ -131,7 +131,7 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
 
         if args.accum_freq == 1:
             with autocast():
-                image_features, text_features, logit_scale = model(images, texts)
+                image_features, text_features, logit_scale  = model(images, texts)
                 if args.extra_da:
                     total_loss, thresholds ,cmr_loss,imc_loss = loss(image_features, text_features,valid_caption_mask, logit_scale,thresholds)
                     if args.threshold_type!="fixed" and thresholds is not None and args.upper_bound is not None:
@@ -170,7 +170,7 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
                         accum_text_features[:j] + [chunk_text_features] + accum_text_features[j + 1:])
                     total_loss = loss(image_features, text_features, logit_scale)
                 backward(total_loss, scaler)
-
+        
         if scaler is not None:
             if args.horovod:
                 optimizer.synchronize()
@@ -195,8 +195,12 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
             accum_images, accum_texts, accum_image_features, accum_text_features = [], [], [], []
 
         # Note: we clamp to 4.6052 = ln(100), as in the original paper.
-        with torch.no_grad():
-            unwrap_model(model).logit_scale.clamp_(0, math.log(100))
+        if isinstance(logit_scale, tuple):
+            # for siglip
+            logit_scale, logit_bias = logit_scale
+        else:
+            with torch.no_grad():
+                unwrap_model(model).logit_scale.clamp_(0, math.log(100))
 
         batch_time_m.update(time.time() - end)
         end = time.time()
@@ -266,140 +270,14 @@ def train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, tb_wr
             data_time_m.reset()
     # end for
 
-def calculate_winoground_score(winoground_clip_scores):
-    def text_correct(result):
-        return result["c0_i0"] > result["c1_i0"] and result["c1_i1"] > result["c0_i1"]
-
-    def image_correct(result):
-        return result["c0_i0"] > result["c0_i1"] and result["c1_i1"] > result["c1_i0"]
-
-    def group_correct(result):
-        return image_correct(result) and text_correct(result)
-    text_correct_count = 0
-    image_correct_count = 0
-    group_correct_count = 0
-    for result in winoground_clip_scores:
-        text_correct_count += 1 if text_correct(result) else 0
-        image_correct_count += 1 if image_correct(result) else 0
-        group_correct_count += 1 if group_correct(result) else 0
-        
-    denominator = len(winoground_clip_scores)
-    # print("text score:", text_correct_count/denominator)
-    # print("image score:", image_correct_count/denominator)
-    # print("group score:", group_correct_count/denominator)
-    # wandb.log({'text score':text_correct_count/denominator,"image score":image_correct_count/denominator,"group score":group_correct_count/denominator})
-    return {"text score":text_correct_count/denominator,"image score":image_correct_count/denominator,"group score":group_correct_count/denominator}
-def evaluate_winoground(model, data, epoch, args, tb_writer=None):
+def evaluate(model, data, epoch, args, tb_writer=None, is_siglip = False):
     metrics = {}
     if not is_master(args):
         return metrics
     device = torch.device(args.device)
     model.eval()
 
-    zero_shot_metrics = zero_shot_eval(model, data, epoch, args)
-    metrics.update(zero_shot_metrics)
-
-    autocast = get_autocast(args.precision)
-    cast_dtype = get_cast_dtype(args.precision)
-
-    if 'val' in data and (args.val_frequency and ((epoch % args.val_frequency) == 0 or epoch == args.epochs)):
-        dataloader = data['val'].dataloader
-        num_samples = 0
-        samples_per_val = dataloader.num_samples
-
-        # FIXME this does not scale past small eval datasets
-        # all_image_features @ all_text_features will blow up memory and compute very quickly
-        cumulative_loss = 0.0
-        all_image_features, all_text_features = [], []
-        scores={'c0_i0':[],'c0_i1':[],'c1_i0':[],'c1_i1':[]}
-        with torch.no_grad():
-            for i, batch in enumerate(dataloader):
-                images, texts = batch
-                images = images.to(device=device, dtype=cast_dtype, non_blocking=True)
-                texts = texts.to(device=device, non_blocking=True)
-                batch_size=texts.shape[0]//2
-                with autocast():
-                    image_features, text_features, logit_scale = model(images, texts)
-                    # features are accumulated in CPU tensors, otherwise GPU memory exhausted quickly
-                    # however, system RAM is easily exceeded and compute time becomes problematic
-                    all_image_features.append(image_features.cpu())
-                    all_text_features.append(text_features.cpu())
-                    logit_scale = logit_scale.mean()
-                    # logits_per_image = logit_scale * image_features @ text_features.t()
-                    image_features=image_features.view(batch_size,2,-1)
-                    text_features=text_features.view(batch_size,2,-1)
-                    logits_per_image = torch.matmul(image_features,text_features.transpose(1,2)) * logit_scale
-
-                    logits_per_image=logits_per_image.squeeze().cpu()
-                    clip_score_c0_i0=logits_per_image[:,0,0].tolist()
-                    clip_score_c1_i0=logits_per_image[:,0,1].tolist()
-                    clip_score_c0_i1=logits_per_image[:,1,0].tolist()
-                    clip_score_c1_i1=logits_per_image[:,1,1].tolist()
-                    scores['c0_i0'].extend(clip_score_c0_i0)
-                    scores['c0_i1'].extend(clip_score_c0_i1)
-                    scores['c1_i0'].extend(clip_score_c1_i0)
-                    scores['c1_i1'].extend(clip_score_c1_i1)
-
-                    # logits_per_text = logits_per_image.t()
-
-                    # batch_size = images.shape[0]
-                    # labels = torch.arange(batch_size, device=device).long()
-                    # total_loss = (
-                    #     F.cross_entropy(logits_per_image, labels) +
-                    #     F.cross_entropy(logits_per_text, labels)
-                    # ) / 2
-
-                # cumulative_loss += total_loss * batch_size
-                num_samples += batch_size
-                # if is_master(args) and (i % 100) == 0:
-                #     logging.info(
-                #         f"Eval Epoch: {epoch} [{num_samples} / {samples_per_val}]\t"
-                #         f"Loss: {cumulative_loss / num_samples:.6f}\t")
-            winoground_clip_scores=[]
-            for idx in range(len(scores['c0_i0'])):
-                winoground_clip_scores.append({"id" : idx, "c0_i0": scores['c0_i0'][idx], "c0_i1": scores['c0_i1'][idx], "c1_i0": scores['c1_i0'][idx], "c1_i1": scores['c1_i1'][idx]})
-            winoground_metric=calculate_winoground_score(winoground_clip_scores)
-            val_metrics = get_metrics(
-                image_features=torch.cat(all_image_features),
-                text_features=torch.cat(all_text_features),
-                logit_scale=logit_scale.cpu(),
-            )
-            # loss = cumulative_loss / num_samples
-            metrics.update(
-                {**val_metrics,**winoground_metric, "epoch": epoch, "num_samples": num_samples}
-            )
-
-    if not metrics:
-        return metrics
-
-    logging.info(
-        f"Eval Epoch: {epoch} "
-        + "\t".join([f"{k}: {round(v, 4):.4f}" for k, v in metrics.items()])
-    )
-
-    if args.save_logs:
-        for name, val in metrics.items():
-            if tb_writer is not None:
-                tb_writer.add_scalar(f"val/{name}", val, epoch)
-
-        with open(os.path.join(args.checkpoint_path, "results.jsonl"), "a+") as f:
-            f.write(json.dumps(metrics))
-            f.write("\n")
-
-    if args.wandb:
-        assert wandb is not None, 'Please install wandb.'
-        for name, val in metrics.items():
-            wandb.log({f"val/{name}": val, 'epoch': epoch})
-
-    return metrics
-
-def evaluate(model, data, epoch, args, tb_writer=None):
-    metrics = {}
-    if not is_master(args):
-        return metrics
-    device = torch.device(args.device)
-    model.eval()
-
+    # zeroshot eval imagenet
     zero_shot_metrics = zero_shot_eval(model, data, epoch, args)
     metrics.update(zero_shot_metrics)
 
@@ -417,53 +295,61 @@ def evaluate(model, data, epoch, args, tb_writer=None):
         cumulative_gen_loss = 0.0
         all_image_features, all_text_features = [], []
         with torch.no_grad():
-            for i, batch in enumerate(dataloader):
+            for i, batch in enumerate(tqdm(dataloader, desc=f"Evaluating batches with {'siglip' if is_siglip else 'clip'}")):
                 images, texts = batch
                 images = images.to(device=device, dtype=cast_dtype, non_blocking=True)
                 texts = texts.to(device=device, non_blocking=True)
 
                 with autocast():
-                    model_out = model(images, texts)
-                    image_features = model_out["image_features"]
-                    text_features = model_out["text_features"]
-                    logit_scale = model_out["logit_scale"]
+                    image_features, text_features, logit_scale = model(images, texts)
+
                     # features are accumulated in CPU tensors, otherwise GPU memory exhausted quickly
                     # however, system RAM is easily exceeded and compute time becomes problematic
                     all_image_features.append(image_features.cpu())
                     all_text_features.append(text_features.cpu())
-                    logit_scale = logit_scale.mean()
-                    logits_per_image = logit_scale * image_features @ text_features.t()
-                    logits_per_text = logits_per_image.t()
-
                     batch_size = images.shape[0]
-                    labels = torch.arange(batch_size, device=device).long()
-                    total_loss = (
-                        F.cross_entropy(logits_per_image, labels) +
-                        F.cross_entropy(logits_per_text, labels)
-                    ) / 2
+                    if is_siglip:
+                        logit_scale, logit_bias = logit_scale
+                        logits_per_image = torch.matmul(image_features, text_features.t()) * logit_scale + logit_bias
+                        
+                        n = logits_per_image.size(0)
+                        labels = 2 * torch.eye(n, device=device) - torch.ones(n, device = device) 
+                        total_loss = -torch.mean(F.logsigmoid(labels * logits_per_image))
+                    else:
+                        logit_scale = logit_scale.mean()
+                        logits_per_image = logit_scale * image_features @ text_features.t()
+                        logits_per_text = logits_per_image.t()
 
-                    gen_loss = maybe_compute_generative_loss(model_out)
+                        labels = torch.arange(batch_size, device=device).long()
+                        total_loss = (
+                            F.cross_entropy(logits_per_image, labels) +
+                            F.cross_entropy(logits_per_text, labels)
+                        ) / 2
+
+                    # gen_loss = maybe_compute_generative_loss(model_out)
+                    gen_loss = None
 
                 cumulative_loss += total_loss * batch_size
                 num_samples += batch_size
-                if is_master(args) and (i % 100) == 0:
-                    logging.info(
-                        f"Eval Epoch: {epoch} [{num_samples} / {samples_per_val}]\t"
-                        f"Clip Loss: {cumulative_loss / num_samples:.6f}\t")
 
-                    if gen_loss is not None:
-                        cumulative_gen_loss += gen_loss * batch_size
-                        logging.info(
-                            f"Generative Loss: {cumulative_gen_loss / num_samples:.6f}\t")
+            if is_siglip:
+                val_metrics = get_siglip_metrics(
+                    image_features=torch.cat(all_image_features),
+                    text_features=torch.cat(all_text_features),
+                    logit_scale=logit_scale.cpu(),
+                    logit_bias=logit_bias.cpu(),
 
-            val_metrics = get_clip_metrics(
-                image_features=torch.cat(all_image_features),
-                text_features=torch.cat(all_text_features),
-                logit_scale=logit_scale.cpu(),
-            )
+                )
+            else:
+                val_metrics = get_clip_metrics(
+                    image_features=torch.cat(all_image_features),
+                    text_features=torch.cat(all_text_features),
+                    logit_scale=logit_scale.cpu(),
+                )
+            metrics.update(**val_metrics)
             loss = cumulative_loss / num_samples
             metrics.update(
-                {**val_metrics, "clip_val_loss": loss.item(), "epoch": epoch, "num_samples": num_samples}
+                {"clip_val_loss": loss.item(), "epoch": epoch, "num_samples": num_samples}
             )
             if gen_loss is not None:
                 gen_loss = cumulative_gen_loss / num_samples
@@ -493,9 +379,28 @@ def evaluate(model, data, epoch, args, tb_writer=None):
 
     return metrics
 
-
-def get_metrics(image_features, text_features, logit_scale):
+def get_siglip_metrics(image_features, text_features, logit_scale, logit_bias):
     metrics = {}
+
+    logits_per_image = (torch.matmul(image_features, text_features.t()) * logit_scale + logit_bias).detach().cpu()
+    logits_per_text = logits_per_image.t().detach().cpu()
+
+    logits = {"image_to_text": logits_per_image, "text_to_image": logits_per_text}
+    ground_truth = torch.arange(len(text_features)).view(-1, 1)
+
+    for name, logit in logits.items():
+        ranking = torch.argsort(logit, descending=True)
+        preds = torch.where(ranking == ground_truth)[1]
+        preds = preds.detach().cpu().numpy()
+        metrics[f"{name}_mean_rank"] = preds.mean() + 1
+        metrics[f"{name}_median_rank"] = np.floor(np.median(preds)) + 1
+        for k in [1, 5, 10]:
+            metrics[f"{name}_R@{k}"] = np.mean(preds < k)
+
+    return metrics
+def get_clip_metrics(image_features, text_features, logit_scale):
+    metrics = {}
+
     logits_per_image = (logit_scale * image_features @ text_features.t()).detach().cpu()
     logits_per_text = logits_per_image.t().detach().cpu()
 

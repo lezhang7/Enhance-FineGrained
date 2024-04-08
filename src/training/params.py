@@ -247,7 +247,7 @@ def parse_args(args):
     )
     parser.add_argument(
         "--pretrained",
-        default='openai',
+        default=None,
         type=str,
         help="Use a pretrained CLIP model weights with the specified tag or file path.",
     )

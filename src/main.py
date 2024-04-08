@@ -34,7 +34,7 @@ from training.distributed import is_master, init_distributed_device, broadcast_o
 from training.logger import setup_logging
 from training.params import parse_args
 from training.scheduler import cosine_lr, const_lr, const_lr_cooldown
-from training.train import train_one_epoch, evaluate,evaluate_winoground
+from training.train import train_one_epoch, evaluate
 from training.file_utils import pt_load, check_exists, start_sync_process, remote_sync
 
 
@@ -70,7 +70,6 @@ def get_latest_checkpoint(path: str, remote : bool):
 
 def main(args):
     args = parse_args(args)
-
     if torch.cuda.is_available():
         # This enables tf32 on Ampere GPUs which is only 8% slower than
         # float16 and almost as accurate as float32
@@ -365,16 +364,14 @@ def main(args):
         wandb.save(params_file)
         logging.debug('Finished loading wandb.')
 
+    # Only evaluate
     if 'train' not in data:
-        if "winoground"==args.val_data:
-            logging.info(f"Running evaluation on winoground dataset.")
-            evaluate_winoground(model, data, start_epoch, args, writer)
-        else:
-            logging.info(f"Running evaluation on {args.val_data} dataset.")
-            evaluate(model, data, start_epoch, args, writer)
+        assert args.val_data is not None, "Please specify a validation dataset."
+        logging.info(f"Running evaluation on {args.val_data} dataset.")
+        evaluate(model, data, start_epoch, args, writer, is_siglip='siglip' in args.model)
         return
 
-    # training
+    # Training
     for epoch in range(start_epoch, args.epochs):
         if is_master(args):
             logging.info(f'Start epoch {epoch}')
@@ -382,12 +379,11 @@ def main(args):
         train_one_epoch(model, data,epoch, optimizer, scaler, scheduler, args, writer)
         completed_epoch = epoch + 1
 
-        if "winoground"==args.val_data:
-            logging.info(f"Running evaluation on winoground dataset.")
-            evaluate_winoground(model, data, start_epoch, args, writer)
-        elif any(v in data for v in ('val', 'imagenet-val', 'imagenet-v2')):
-            logging.info(f"Running evaluation on {args.val_data} dataset.")
-            evaluate(model, data, start_epoch, args, writer)
+        # Evaluation after each epoch
+        if any(v in data for v in ('val', 'imagenet-val', 'imagenet-v2')):
+            
+            # eval only occurs on master rank
+            evaluate(model, data, epoch, args, writer, is_siglip='siglip' in args.model)
         
         # Saving checkpoints.
         if args.save_logs:
