@@ -34,7 +34,7 @@ you need to specify training parameters in scrips/run_all.sh such as  `--gres=gp
 
 ```python
 cd scripts/
-bash run_multiple_nodes
+bash run_multiple_nodes.sh
 ```
 
 The result checkpoint will be at `Enhance-FineGrained/src/Outputs`
