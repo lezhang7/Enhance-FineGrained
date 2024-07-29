@@ -93,13 +93,11 @@ Our method entails curriculum learning, which is validated by the growth of adap
 # :paperclip: Citation
 
 ``````bibtex
-@misc{zhang2023contrasting,
-      title={Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding}, 
-      author={Le Zhang and Rabiul Awal and Aishwarya Agrawal},
-      year={2023},
-      eprint={2306.08832},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{zhang2023contrasting,
+  title={Contrasting Intra-Modal and Ranking Cross-Modal Hard Negatives to Enhance Visio-Linguistic Fine-grained Understanding},
+  author={Zhang, Le and Awal, Rabiul and Agrawal, Aishwarya},
+  journal={arXiv preprint arXiv:2306.08832},
+  year={2023}
 }
 ``````
 
