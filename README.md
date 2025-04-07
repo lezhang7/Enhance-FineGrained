@@ -17,6 +17,8 @@ pip install --upgrade --no-cache-dir gdown # must update gdown to avoid bugs, th
 gdown 1DWPw3CtGh5cHz9bW_-iXRSG7BBUVl13K #download checkpoint for CE-CLIP
 ``````
 
+You can also download it from 🤗 Hugging Face: [https://huggingface.co/le723z/CE_CLIP](https://huggingface.co/le723z/CE_CLIP)
+
 # Training
 
 ### 1. Generating Training dataset
